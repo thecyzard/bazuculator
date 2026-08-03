@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
+        body {
+            background: #000;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        #calc {
+            background: #111;
+            padding: 20px;
+            border-radius: 20px;
+            border: 2px solid #1b5e20;
+            max-width: 300px;
+            width: 100%;
+        }
+        #display {
+            background: #000;
+            border: 1px solid #2e7d32;
+            font-size: 32px;
+            padding: 15px;
+            text-align: right;
+            margin-bottom: 10px;
+            color: #a5d6a7;
+            border-radius: 8px;
+        }
+        .buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+        button {
+            padding: 16px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            background: #1b5e20;
+            color: #fff;
+            cursor: pointer;
+        }
+        button:active { background: #2e7d32; }
+        .hidden { display: none !important; }
+
+        #store {
+            margin-top: 25px;
+            background: #111;
+            border: 2px solid #4caf50;
+            border-radius: 20px;
+            padding: 25px;
+            max-width: 700px;
+            width: 95%;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            background: #1b1b1b;
+            border: 1px solid #2e7d32;
+            color: #fff;
+            border-radius: 5px;
+        }
+        #store h2 { color: #4caf50; text-align: center; margin-bottom: 15px; }
+        .tab-btn { margin-right: 10px; background: #4caf50; color: #000; font-weight: bold; padding: 10px; }
+        .product-card {
+            background: #0f0f0f;
+            border: 1px solid #2e7d32;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .buy-btn { background: #4caf50; color: #000; font-weight: bold; padding: 8px 12px; border-radius: 5px; cursor: pointer; border: none;}
+        #logoutBtn { background: #b71c1c; margin-top: 15px; }
+    </style>
+</head>
+<body>
+
+    <!-- Calculator -->
+    <div id="calc">
+        <div id="display">0</div>
+        <div class="buttons" id="calcButtons"></div>
+    </div>
+
+    <!-- Hidden Store -->
+    <div id="store" class="hidden">
+        <h2>🌿 Green Store</h2>
+        
+        <div id="authSection">
+            <button class="tab-btn" id="showLogin">Login</button>
+            <button class="tab-btn" id="showReg">Register</button>
+            <div id="loginForm">
+                <input type="email" id="loginEmail" placeholder="Email">
+                <input type="password" id="loginPass" placeholder="Password">
+                <button onclick="doLogin()">Login</button>
+            </div>
+            <div id="regForm" class="hidden">
+                <input type="text" id="regName" placeholder="Full Name">
+                <input type="email" id="regEmail" placeholder="Email">
+                <input type="password" id="regPass" placeholder="Password">
+                <button onclick="doRegister()">Register</button>
+            </div>
+        </div>
+
+        <div id="shopSection" class="hidden">
+            <h3>Available Products</h3>
+            <div id="productsList">Loading products...</div>
+        </div>
+
+        <div id="adminSection" class="hidden">
+            <h3>Admin Dashboard</h3>
+            <div style="margin: 10px 0;">
+                <button class="tab-btn" onclick="filterAdminOrders('pending')">⏳ Pending</button>
+                <button class="tab-btn" style="background: #2e7d32;" onclick="filterAdminOrders('delivered')">📜 Delivered</button>
+            </div>
+            <div id="ordersList"></div>
+        </div>
+
+        <button id="logoutBtn" class="hidden" onclick="doLogout()">Logout</button>
+    </div>
+
+    <script>
+        let expression = '';
+        const display = document.getElementById('display');
+        const buttons = document.getElementById('calcButtons');
+        const keys = ['C','⌫','%','÷','7','8','9','×','4','5','6','−','1','2','3','+','0','.','='];
+
+        keys.forEach(k => {
+            const b = document.createElement('button');
+            b.textContent = k;
+            b.onclick = () => click(k);
+            buttons.appendChild(b);
+        });
+
+        function click(k) {
+            if (k === 'C') expression = '';
+            else if (k === '⌫') expression = expression.slice(0, -1);
+            else if (k === '=') {
+                try {
+                    let expr = expression.replace(/%/g, '/100').replace(/÷/g, '/').replace(/×/g, '*').replace(/−/g, '-');
+                    let result = Function('"use strict"; return (' + expr + ')')();
+                    result = parseFloat(result.toFixed(10));
+                    if (Math.abs(result - 0.7734) < 0.0001) {
+                        unlockStore();
+                        display.textContent = "Lets enjoy nature!";
+                        expression = '';
+                        return;
+                    }
+                    display.textContent = result;
+                    expression = String(result);
+                    return;
+                } catch(e) {
+                    display.textContent = '0';
+                    expression = '';
+                    return;
+                }
+            } else {
+                expression += k;
+            }
+            display.textContent = expression || '0';
+        }
+
+        document.getElementById('showReg').onclick = () => {
+            document.getElementById('regForm').classList.remove('hidden');
+            document.getElementById('loginForm').classList.add('hidden');
+        };
+        document.getElementById('showLogin').onclick = () => {
+            document.getElementById('loginForm').classList.remove('hidden');
+            document.getElementById('regForm').classList.add('hidden');
+        };
+
+        function unlockStore() {
+            document.getElementById('store').classList.remove('hidden');
+            initSupabase();
+            window.addEventListener('blur', () => document.body.style.filter = 'blur(20px)');
+            window.addEventListener('focus', () => document.body.style.filter = 'none');
+        }
+
+        let sb = null;
+        let activeOrdersChannel = null;
+        let activeChannel = null;
+        let activeOrderId = null;
+        let adminOrdersChannel = null;
+        let adminFilter = 'pending';
+
+        const SUPABASE_URL = 'https://gchupuawqpttvteunnqg.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdjaHVwdWF3cXB0dHZ0ZXVubnFnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU3NTc3NDEsImV4cCI6MjEwMTMzMzc0MX0.It3BYyKvPA1aqgmOq-BbREQ7R3OWIQqIlVlpfRHlyZw';
+
+        function initSupabase() {
+            if (sb) return;
+            if (window.supabase) {
+                sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            }
+        }
+
+        document.getElementById('showReg').addEventListener('click', () => {
+            document.getElementById('regForm').classList.remove('hidden');
+            document.getElementById('loginForm').classList.add('hidden');
+        });
+
+        document.getElementById('showLogin').addEventListener('click', () => {
+            document.getElementById('loginForm').classList.remove('hidden');
+            document.getElementById('regForm').classList.add('hidden');
+        });
+
+        async function doLogin() {
+            const email = document.getElementById('loginEmail').value;
+            const pass = document.getElementById('loginPass').value;
+            const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
+            if (error) {
+                if (error.status === 400 && error.message.toLowerCase().includes("confirmed")) {
+                    alert('ACCESS DENIED: Your email is not verified. Please check your inbox and click the activation link.');
+                } else {
+                    alert('Login error: ' + error.message);
+                }
+                return;
+            }
+            const { data: profile, error: profileError } = await sb.from('profiles').select('is_admin').eq('id', data.user.id).single();
+            if (profileError) {
+                console.error('Profile loading error:', profileError.message);
+                return;
+            }
+            showShop(profile?.is_admin);
+        }
+
+        async function doRegister() {
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const pass = document.getElementById('regPass').value;
+
+            // Password rules
+            const minLength = 8;
+            const hasUpper = /[A-Z]/.test(pass);
+            const hasLower = /[a-z]/.test(pass);
+            const hasNumber = /[0-9]/.test(pass);
+            const hasSymbol = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(pass);
+
+            if (pass.length < minLength || !hasUpper || !hasLower || !hasNumber || !hasSymbol) {
+                alert('Password must be at least 8 characters long and include uppercase, lowercase, number, and symbol.');
+                return;
+            }
+
+            const { data, error } = await sb.auth.signUp({ 
+                email, 
+                password: pass,
+                options: { data: { full_name: name } }
+            });
+
+            if (error) return alert('Registration failed: ' + error.message);
+            if (data.user) {
+                alert('Verification email sent! You MUST click the link in your email to activate your account.');
+                document.getElementById('showLogin').click();
+            }
+        }
+
+        function showShop(isAdmin) {
+            document.getElementById('authSection').classList.add('hidden');
+            document.getElementById('logoutBtn').classList.remove('hidden');
+
+            if (!document.getElementById('chatOverlay')) {
+                const chatDiv = document.createElement('div');
+                chatDiv.id = 'chatOverlay';
+                chatDiv.className = 'hidden';
+                chatDiv.style = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:2000; display:flex; align-items:center; justify-content:center;";
+                chatDiv.innerHTML = `
+                    <div style="width:95%; max-width:400px; height:85vh; background:#000; border:1px solid #4caf50; display:flex; flex-direction:column; border-radius:15px; overflow:hidden; box-shadow: 0 0 30px rgba(76, 175, 80, 0.2);">
+                        <div style="background:#4caf50; color:#000; padding:15px; display:flex; justify-content:space-between; align-items:center; font-weight:bold;">
+                            <span>💬 LIVE CHAT</span>
+                            <button onclick="closeChat()" style="background:#000; border:none; color:#4caf50; font-weight:bold; cursor:pointer; width:30px; height:30px; border-radius:50%;">X</button>
+                        </div>
+                        <div id="messageList" style="flex:1; overflow-y:auto; padding:15px; display:flex; flex-direction:column; gap:10px; background:#050505;"></div>
+                        <div style="padding:15px; background:#000; border-top:1px solid #1a1a1a; display:flex; gap:8px;">
+                            <input type="text" id="chatInput" style="flex:1; background:#111; border:1px solid #4caf50; color:#fff; padding:12px; border-radius:25px; outline:none; padding-left:20px;" placeholder="Andika ujumbe...">
+                            <button id="sendMsgBtn" style="background:#4caf50; border:none; width:45px; height:45px; border-radius:50%; cursor:pointer; font-weight:bold; display:flex; align-items:center; justify-content:center;">➤</button>
+                        </div>
+                    </div>`;
+                document.body.appendChild(chatDiv);
+            }
+
+            if (isAdmin) {
+                document.getElementById('adminSection').classList.remove('hidden');
+                adminFilter = 'pending';
+                loadOrders('pending');
+                setupRealtimeForAdmin();
+            } else {
+                document.getElementById('shopSection').classList.remove('hidden');
+                loadProducts();
+                loadMyActiveOrders();
+                setupRealtimeForOrders();
+            }
+        }
+
+        async function setupRealtimeForAdmin() {
+            if (adminOrdersChannel) sb.removeChannel(adminOrdersChannel);
+
+            adminOrdersChannel = sb.channel('admin_orders')
+                .on('postgres_changes', 
+                    { event: 'INSERT', schema: 'public', table: 'orders' },
+                    async () => {
+                        if (adminFilter === 'pending') {
+                            await loadOrders('pending');
+                        }
+                    })
+                .subscribe();
+        }
+
+        async function setupRealtimeForOrders() {
+            if (activeOrdersChannel) sb.removeChannel(activeOrdersChannel);
+
+            const { data: { user } } = await sb.auth.getUser();
+            if (!user) return;
+
+            activeOrdersChannel = sb.channel(`orders_${user.id}`)
+                .on('postgres_changes', 
+                    { event: 'UPDATE', schema: 'public', table: 'orders', filter: `user_id=eq.${user.id}` },
+                    async (payload) => {
+                        if (payload.new.status === 'delivered') {
+                            await loadMyActiveOrders();
+                            if (activeOrderId === payload.new.id) {
+                                closeChat();
+                                alert('Order imekwisha kutumwa - chat imefungwa.');
+                            }
+                        }
+                    })
+                .subscribe();
+        }
+
+        async function loadProducts() {
+            const { data: products, error } = await sb.from('products').select('*');
+            if (error) {
+                console.error('Error loading products:', error.message);
+                return;
+            }
+            const list = document.getElementById('productsList');
+            list.innerHTML = '';
+            products.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `<span>${p.name} - $${p.price_usd}</span><button class="buy-btn" onclick="placeOrder('${p.id}')">Order</button>`;
+                list.appendChild(card);
+            });
+        }
+
+        async function placeOrder(productId) {
+            const { data: { user } } = await sb.auth.getUser();
+            const address = prompt("Enter Delivery Address:");
+            if (!address) return;
+            const { error } = await sb.from('orders').insert([{ user_id: user.id, product_id: productId, status: 'pending', delivery_address: address }]);
+            if (error) {
+                alert(error.message);
+            } else {
+                alert("Order placed!");
+                loadMyActiveOrders();
+            }
+        }
+
+        async function loadOrders(statusFilter) {
+            const { data: orders, error } = await sb.from('orders')
+                .select('*, profiles!orders_user_id_fkey(full_name), products(name)')
+                .eq('status', statusFilter)
+                .order('created_at', { ascending: statusFilter === 'pending' });
+
+            const list = document.getElementById('ordersList');
+            if (error) {
+                console.error('Error loading orders:', error.message);
+                list.innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
+                return;
+            }
+
+            if (!orders || orders.length === 0) {
+                list.innerHTML = `<p style="color:#666; padding:10px;">No ${statusFilter} orders.</p>`;
+                return;
+            }
+
+            list.innerHTML = orders.map(o => `
+                <div class="product-card" style="flex-direction:column; align-items:flex-start; border-bottom:1px solid #eee; padding:10px;">
+                    <div style="width:100%; display:flex; justify-content:space-between; font-size:12px; color:#4caf50;">
+                        <strong>${o.products?.name || 'Unknown'}</strong>
+                        <span>${new Date(o.created_at).toLocaleString()}</span>
+                    </div>
+                    <p style="margin:5px 0;">👤 ${o.profiles?.full_name || 'Unknown'}</p>
+                    <p style="font-size:14px; color:#888;">📍 ${o.delivery_address}</p>
+                    ${statusFilter === 'pending' ? `
+                        <div style="display:flex; gap:10px;">
+                            <button class="buy-btn" style="background:#2196F3;" onclick="openChat('${o.id}')">💬 Chat</button>
+                            <button class="buy-btn" onclick="verifyOrder('${o.id}')">Verify & Deliver</button>
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        function filterAdminOrders(status) {
+            adminFilter = status;
+            loadOrders(status);
+        }
+
+        async function loadMyActiveOrders() {
+            const { data: { user } } = await sb.auth.getUser();
+            const { data: orders, error } = await sb.from('orders')
+                .select('*, products!orders_product_id_fkey(name)')
+                .eq('user_id', user.id)
+                .eq('status', 'pending');
+
+            const container = document.getElementById('shopSection');
+            let activeArea = document.getElementById('activeOrdersArea');
+            if (!activeArea) {
+                activeArea = document.createElement('div');
+                activeArea.id = 'activeOrdersArea';
+                container.appendChild(activeArea);
+            }
+
+            if (error) {
+                console.error('Error loading active orders:', error.message);
+                activeArea.innerHTML = '<h3 style="color:#4caf50; margin-top:20px;">My Active Orders</h3><p style="color:#f44;">Error loading orders.</p>';
+                return;
+            }
+
+            activeArea.innerHTML = '<h3 style="color:#4caf50; margin-top:20px;">My Active Orders</h3>';
+            if (!orders || orders.length === 0) {
+                activeArea.innerHTML += '<p style="color:#666;">No active orders.</p>';
+            } else {
+                orders.forEach(o => {
+                    activeArea.innerHTML += `
+                        <div class="product-card" style="border:1px solid #4caf50; background:#111; margin-bottom:10px; padding:10px; border-radius:8px;">
+                            <span style="color:#fff;">${o.products?.name || 'Unknown Product'} (Pending)</span>
+                            <button class="buy-btn" style="background:#4caf50; color:#000; margin-top:5px;" onclick="openChat('${o.id}')">💬 Chat with Admin</button>
+                        </div>`;
+                });
+            }
+        }
+
+        async function openChat(orderId) {
+            const { data: { user } } = await sb.auth.getUser();
+
+            const { data: orderCheck, error: orderError } = await sb.from('orders')
+                .select('status')
+                .eq('id', orderId)
+                .single();
+
+            if (orderError || orderCheck?.status !== 'pending') {
+                alert('Order imekwisha kutumwa. Huwezi ku chat tena.');
+                return;
+            }
+
+            activeOrderId = orderId;
+
+            const overlay = document.getElementById('chatOverlay');
+            const list = document.getElementById('messageList');
+            const input = document.getElementById('chatInput');
+            const btn = document.getElementById('sendMsgBtn');
+
+            overlay.classList.remove('hidden');
+            list.innerHTML = '<p id="statusTxt" style="color:#4caf50; text-align:center;">Kuunganisha chat...</p>';
+
+            const addBubble = (m) => {
+                const statusTxt = document.getElementById('statusTxt');
+                if (statusTxt) statusTxt.remove();
+
+                const isMe = m.sender_id === user.id;
+                const div = document.createElement('div');
+                div.style = `max-width:80%; padding:12px; margin:8px 0; font-size:14px; align-self:${isMe ? 'flex-end' : 'flex-start'}; background:${isMe ? '#4caf50' : '#1a1a1a'}; color:${isMe ? '#000' : '#fff'}; border-radius:${isMe ? '15px 15px 0 15px' : '15px 15px 15px 0'}; border:${isMe ? 'none' : '1px solid #4caf50'};`;
+                div.textContent = m.text;
+                list.appendChild(div);
+                list.scrollTop = list.scrollHeight;
+            };
+
+            if (activeChannel) sb.removeChannel(activeChannel);
+
+            const { data: oldMsgs, error: oldMsgsError } = await sb.from('messages')
+                .select('*')
+                .eq('order_id', orderId)
+                .order('created_at', { ascending: true });
+            list.innerHTML = '';
+            if (oldMsgsError) {
+                console.error('Error loading messages:', oldMsgsError.message);
+                list.innerHTML = '<p style="color:red;">Error loading chat history.</p>';
+            } else if (oldMsgs && oldMsgs.length > 0) {
+                oldMsgs.forEach(addBubble);
+            }
+
+            activeChannel = sb.channel(`chat_${orderId}`)
+                .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages', filter: `order_id=eq.${orderId}` }, (payload) => {
+                    if (payload.new.sender_id !== user.id) addBubble(payload.new);
+                })
+                .subscribe((status) => {
+                    if (status === 'SUBSCRIBED') {
+                        const statusTxt = document.getElementById('statusTxt');
+                        if (statusTxt) statusTxt.textContent = "Imeunganishwa!";
+                        setTimeout(() => { if(document.getElementById('statusTxt')) document.getElementById('statusTxt').remove(); }, 1500);
+                    }
+                });
+
+            btn.onclick = async () => {
+                const text = input.value.trim();
+                if (!text) return;
+                addBubble({ text: text, sender_id: user.id });
+                input.value = '';
+                const { error } = await sb.from('messages').insert([{ order_id: orderId, text: text, sender_id: user.id }]);
+                if (error) alert("Message not sent. Check permissions.");
+            };
+        }
+
+        function closeChat() {
+            const overlay = document.getElementById('chatOverlay');
+            if (overlay) overlay.classList.add('hidden');
+            activeOrderId = null;
+            if (activeChannel) {
+                sb.removeChannel(activeChannel);
+                activeChannel = null;
+            }
+        }
+
+        async function verifyOrder(orderId) {
+            await sb.from('orders').update({ status: 'delivered' }).eq('id', orderId);
+            loadOrders(adminFilter);
+        }
+
+        function doLogout() {
+            if (activeOrdersChannel) sb.removeChannel(activeOrdersChannel);
+            if (activeChannel) sb.removeChannel(activeChannel);
+            if (adminOrdersChannel) sb.removeChannel(adminOrdersChannel);
+            sb.auth.signOut();
+            location.reload();
+        }
+
+        // ===== SCREENSHOT & RECORDING PROTECTION =====
+        document.addEventListener('contextmenu', e => e.preventDefault());
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'PrintScreen') {
+                e.preventDefault();
+                alert('Screenshots are disabled.');
+                navigator.clipboard.writeText('').catch(() => {});
+            }
+
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
+                e.preventDefault();
+                alert('Saving is disabled.');
+            }
+
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 's') {
+                e.preventDefault();
+                alert('Screenshot disabled.');
+            }
+
+            if (e.metaKey && e.shiftKey && (e.key === '3' || e.key === '4')) {
+                e.preventDefault();
+                alert('Screenshot disabled.');
+            }
+
+            if (e.metaKey && e.shiftKey && e.key === '5') {
+                e.preventDefault();
+                alert('Screen recording is disabled.');
+            }
+        });
+    </script>
+</body>
+</html>
