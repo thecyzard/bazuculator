@@ -887,6 +887,7 @@ const supabaseReady = () => window.supabase && SUPABASE_URL.startsWith("https://
 const $ = id => document.getElementById(id);
 let db = null, customerDb = null, currentUser = null, currentConversation = null, isAdmin = false;
 let customerChannel = null, adminChannel = null, listChannel = null, typingTimer = null, toastTimer = null;
+let customerRealtimeRetryTimer = null, customerRealtimeRetryAttempt = 0;
 let conversations = [], activeMessages = [], currentReply = null, lastTypingSent = 0, activeAdminConversation = null;
 let currentCustomerCode = "";
 let adminProfileUrl = null, adminProfilePath = null, adminProfileChannel = null;
@@ -1536,7 +1537,7 @@ async function init(){
  if(supabaseReady()){
    // Keep the existing default auth storage for Admin, and isolate the anonymous Customer identity.
    db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
-   customerDb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{auth:{storageKey:"support-chat-customer-auth-v1",persistSession:true,autoRefreshToken:true,detectSessionInUrl:false}});
+   customerDb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{auth:{storageKey:"support-chat-customer-auth-v1",persistSession:true,autoRefreshToken:true,detectSessionInUrl:false},realtime:{heartbeatIntervalMs:15000,timeout:30000}});
    const [{data:adminSessionData,error:adminSessionError},{data:customerSessionData,error:customerSessionError}]=await Promise.all([db.auth.getSession(),customerDb.auth.getSession()]);
    if(customerSessionError)console.warn("Customer session lookup:",customerSessionError.message);
    const legacy=adminSessionData?.session;
@@ -1565,6 +1566,19 @@ async function ensureSession(){
  currentUser=data.session?.user||data.user;
  if(!currentUser){const again=await customerDb.auth.getUser();currentUser=again.data.user}
  if(!currentUser)throw new Error("Could not establish a customer session.");
+}
+// Start a fresh anonymous identity when a previous customer identity is still attached.
+ // The active session remains persisted during normal use, so refreshes do not log the customer out.
+async function resetCustomerSession(){
+ if(!customerDb)throw new Error("Supabase is not configured.");
+ if(customerChannel){try{await customerDb.removeChannel(customerChannel)}catch{}customerChannel=null}
+ try{await customerDb.auth.signOut({scope:"local"})}catch(err){console.warn("Could not clear previous customer session:",err?.message||err)}
+ try{localStorage.removeItem("support-chat-customer-auth-v1")}catch{}
+ currentUser=null;currentConversation=null;currentCustomerCode="";
+ const {data,error}=await customerDb.auth.signInAnonymously();
+ if(error)throw error;
+ currentUser=data?.user||data?.session?.user||null;
+ if(!currentUser)await ensureSession();
 }
 function rpcPayload(data){return Array.isArray(data)?(data[0]||{}):(data||{})}
 function identitySetupError(error){
@@ -1608,17 +1622,18 @@ async function startCustomer(e){
  $('startButton').disabled=true;
  try{
   await ensureSession();
-  const {data,error}=await customerDb.rpc('register_customer',{p_name:name});
+  let {data,error}=await customerDb.rpc('register_customer',{p_name:name});
   if(error)throw new Error(identitySetupError(error));
-  const result=rpcPayload(data);
+  let result=rpcPayload(data);
+  if(result.status==='already_linked'){
+   await resetCustomerSession();
+   const retry=await customerDb.rpc('register_customer',{p_name:name});
+   if(retry.error)throw new Error(identitySetupError(retry.error));
+   data=retry.data;result=rpcPayload(data);
+  }
   if(result.status==='exists'){
    $('customerContinuePanel').classList.remove('hidden');$('continueName').value=name;$('continueCode').value='';setTimeout(()=>$('continueCode').focus(),40);
    $('continueError').textContent='This name is already registered. If this is you, enter your 4-digit Customer ID under Continue to chat.';
-   $('continueCode').focus();return;
-  }
-  if(result.status==='already_linked'){
-   $('customerContinuePanel').classList.remove('hidden');$('continueName').value='';$('continueCode').value='';setTimeout(()=>$('continueName').focus(),40);
-   $('continueError').textContent='This browser is already linked to a customer. Continue using the original name and 4-digit ID.';
    $('continueCode').focus();return;
   }
   if(!['created','existing_self'].includes(result.status)||!result.customer_code)throw new Error(result.message||'Could not create or recover this customer ID.');
@@ -1636,11 +1651,16 @@ async function continueCustomer(e){
  const button=$('continueButton');button.disabled=true;button.textContent='Checking ID…';
  try{
   await ensureSession();
-  const {data,error}=await customerDb.rpc('continue_customer',{p_name:name,p_code:code});
+  let {data,error}=await customerDb.rpc('continue_customer',{p_name:name,p_code:code});
   if(error)throw new Error(identitySetupError(error));
-  const result=rpcPayload(data);
+  let result=rpcPayload(data);
+  if(result.status==='already_linked'){
+   await resetCustomerSession();
+   const retry=await customerDb.rpc('continue_customer',{p_name:name,p_code:code});
+   if(retry.error)throw new Error(identitySetupError(retry.error));
+   data=retry.data;result=rpcPayload(data);
+  }
   if(result.status==='invalid'){$('continueError').textContent='Name or Customer ID is incorrect. Check both and try again.';return}
-  if(result.status==='already_linked'){$('continueError').textContent='This browser session is linked to a different customer. Open a private window or use the original browser for that customer.';return}
   if(result.status!=='continued'||!result.customer_code)throw new Error(result.message||'Could not continue this conversation.');
   await openCustomerConversation(name,result.customer_code);
   showToast('Welcome back. Your previous conversation has been restored.');
@@ -1675,7 +1695,8 @@ async function customerLogout(){
  if(mediaRecorder&&recordingWho==='customer')stopVoiceRecording('customer',true);
  if(customerChannel&&customerDb){try{await customerDb.removeChannel(customerChannel)}catch(err){console.warn('Could not remove customer realtime channel:',err)}customerChannel=null}
  if(customerDb){const {error}=await customerDb.auth.signOut({scope:'local'});if(error)console.warn('Customer sign-out warning:',error.message)}
- currentUser=null;currentConversation=null;activeMessages=[];currentReply=null;isAdmin=false;currentCustomerCode='';localStorage.removeItem('support-chat-customer-code-v1');
+ try{localStorage.removeItem('support-chat-customer-auth-v1');localStorage.removeItem('support-chat-customer-code-v1');localStorage.removeItem('support-chat-customer-name-v1')}catch{}
+ currentUser=null;currentConversation=null;activeMessages=[];currentReply=null;isAdmin=false;currentCustomerCode='';
  showOnly('welcome');setAdminEntryMode('customer');
  $('topTitle').textContent='Customer Support';$('topSub').textContent='We’re here to help';
  $('customerContinuePanel').classList.add('hidden');$('continueError').textContent='';
@@ -1841,10 +1862,24 @@ async function loadCustomerMessages(){
  const {data,error}=await customerDb.from("messages").select("*").eq("conversation_id",currentConversation.id).order("created_at",{ascending:true}).limit(1000);
  if(error)throw error;activeMessages=await signAttachmentUrls(data||[],customerDb);await fetchMessageReactions(customerDb,currentConversation.id);renderMessages("customerMessages",activeMessages,currentUser.id,false);
 }
+// Serialize customer channel lifecycle so two UI/realtime events cannot remove/create
+// the same topic concurrently. A channel must be fully removed before its replacement starts.
+let customerChannelSetupQueue=Promise.resolve();
 function subscribeCustomerChat(){
- if(customerChannel){customerDb.removeChannel(customerChannel);customerChannel=null;}
- const conversationId=currentConversation?.id;
- if(!conversationId||!customerDb)return;
+ const requestedConversationId=currentConversation?.id;
+ customerChannelSetupQueue=customerChannelSetupQueue.then(()=>subscribeCustomerChatNow(requestedConversationId)).catch(error=>{
+  console.error("[Realtime] customer channel setup failed:",error);
+ });
+ return customerChannelSetupQueue;
+}
+async function subscribeCustomerChatNow(conversationId){
+ if(customerChannel){
+  const previousChannel=customerChannel;
+  customerChannel=null;
+  try{await customerDb.removeChannel(previousChannel)}catch(error){console.warn("[Realtime] previous customer channel removal failed:",error)}
+ }
+ // The requested chat may have changed while the previous channel was being removed.
+ if(!conversationId||!customerDb||!currentUser||currentConversation?.id!==conversationId)return;
  customerChannel=customerDb.channel("chat-presence-"+conversationId,{config:{presence:{key:currentUser.id}}})
   .on("postgres_changes",{event:"INSERT",schema:"public",table:"messages",filter:"conversation_id=eq."+conversationId},async payload=>{
    if(!currentConversation||currentConversation.id!==conversationId)return;
@@ -1864,10 +1899,27 @@ function subscribeCustomerChat(){
    }
   })
   .on("broadcast",{event:"typing"},payload=>{if(currentConversation?.id===conversationId&&payload.payload?.user_id!==currentUser.id)setRemoteTyping("customer",!!payload.payload?.is_typing)})
-  .on("presence",{event:"sync"},()=>syncPeerPresence(customerChannel,conversationId,"customer"))
-  .on("presence",{event:"join"},()=>syncPeerPresence(customerChannel,conversationId,"customer"))
+  .on("presence",{event:"sync"},()=>{if(currentConversation?.id===conversationId)syncPeerPresence(customerChannel,conversationId,"customer")})
+  .on("presence",{event:"join"},()=>{if(currentConversation?.id===conversationId)syncPeerPresence(customerChannel,conversationId,"customer")})
   .on("presence",{event:"leave"},({leftPresences})=>{if((leftPresences||[]).some(m=>m?.role==="admin"&&m.user_id!==currentUser.id&&m.conversation_id===conversationId)){peerPresence.admin.online=false;peerPresence.admin.lastSeenAt=Date.now();peerPresence.admin.typing=false;renderPresence("customer")}syncPeerPresence(customerChannel,conversationId,"customer")})
-  .subscribe((status,error)=>{handleRealtimeStatus("customer chat",status,error,()=>currentConversation?.id===conversationId);if(status==="SUBSCRIBED")trackPeerPresence(customerChannel,"customer",conversationId)});
+  .subscribe((status,error)=>{
+   handleRealtimeStatus("customer chat",status,error,()=>currentConversation?.id===conversationId);
+   if(status==="SUBSCRIBED"){
+    customerRealtimeRetryAttempt=0;
+    if(customerRealtimeRetryTimer){clearTimeout(customerRealtimeRetryTimer);customerRealtimeRetryTimer=null;}
+    trackPeerPresence(customerChannel,"customer",conversationId);
+   }else if(status==="CHANNEL_ERROR"||status==="TIMED_OUT"||status==="CLOSED"){
+    // Recreate the failed channel with capped exponential backoff.
+    if(currentConversation?.id===conversationId&&customerDb&&!customerRealtimeRetryTimer){
+     const delay=Math.min(30000,1000*Math.pow(2,Math.min(customerRealtimeRetryAttempt,5)));
+     customerRealtimeRetryAttempt++;
+     customerRealtimeRetryTimer=setTimeout(()=>{
+      customerRealtimeRetryTimer=null;
+      if(currentConversation?.id===conversationId&&customerDb&&currentUser)subscribeCustomerChat();
+     },delay);
+    }
+   }
+  });
 }
 async function sendMessage(who){
  const input=$(who==="admin"?"adminText":"customerText"),body=input.value.trim();
@@ -2166,9 +2218,33 @@ function subscribeConversationList(){
  .on("postgres_changes",{event:"*",schema:"public",table:"message_reactions"},async payload=>{await handleInboxReactionRealtime(payload);renderConversationList()})
  .subscribe((status,error)=>handleRealtimeStatus("admin inbox",status,error,()=>isAdmin));
 }
-window.addEventListener("online",()=>showToast("Connection restored."));
+let realtimeRecoveryTimer=null;
+async function recoverRealtimeAfterNetworkChange(){
+ if(!navigator.onLine||!supabaseReady())return;
+ clearTimeout(realtimeRecoveryTimer);
+ realtimeRecoveryTimer=setTimeout(async()=>{
+  try{
+   // Supabase normally reconnects WebSockets itself. Refresh/rebuild subscriptions
+   // after network recovery or returning to a backgrounded tab.
+   if(isAdmin){
+    subscribeConversationList();
+    if(currentConversation?.id)await openAdminConversation(currentConversation.id);
+   }else if(currentConversation?.id&&customerDb&&currentUser){
+    await loadCustomerMessages();
+    subscribeCustomerChat();
+   }
+  }catch(error){console.warn("[Realtime] Recovery attempt failed:",error?.message||error);}
+ },900);
+}
+window.addEventListener("online",()=>{showToast("Connection restored. Reconnecting live updates…");recoverRealtimeAfterNetworkChange();});
 window.addEventListener("offline",()=>showToast("You are offline. Messages may not send."));
-document.addEventListener("visibilitychange",()=>{if(!document.hidden){clearReactionUnread();if(currentConversation){if(isAdmin)loadActiveMessages();else loadCustomerMessages()}}});
+document.addEventListener("visibilitychange",()=>{
+ if(!document.hidden){
+  clearReactionUnread();
+  if(currentConversation){if(isAdmin)loadActiveMessages();else loadCustomerMessages().catch(err=>console.warn("Refresh after returning to tab failed:",err?.message||err));}
+  recoverRealtimeAfterNetworkChange();
+ }
+});
 // The profile crop/viewer dialogs are declared later in the HTML file.
 // Start initialization only after the browser has parsed the entire document.
 if (document.readyState === "loading") {
