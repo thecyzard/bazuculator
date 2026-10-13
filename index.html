@@ -888,6 +888,7 @@ const $ = id => document.getElementById(id);
 let db = null, customerDb = null, currentUser = null, currentConversation = null, isAdmin = false;
 let customerChannel = null, adminChannel = null, listChannel = null, typingTimer = null, toastTimer = null;
 let customerRealtimeRetryTimer = null, customerRealtimeRetryAttempt = 0;
+let customerChannelConversationId=null, customerChannelStatus="CLOSED", customerChannelGeneration=0;
 let conversations = [], activeMessages = [], currentReply = null, lastTypingSent = 0, activeAdminConversation = null;
 let currentCustomerCode = "";
 let adminProfileUrl = null, adminProfilePath = null, adminProfileChannel = null;
@@ -1865,22 +1866,28 @@ async function loadCustomerMessages(){
 // Serialize customer channel lifecycle so two UI/realtime events cannot remove/create
 // the same topic concurrently. A channel must be fully removed before its replacement starts.
 let customerChannelSetupQueue=Promise.resolve();
-function subscribeCustomerChat(){
+function subscribeCustomerChat(force=false){
  const requestedConversationId=currentConversation?.id;
- customerChannelSetupQueue=customerChannelSetupQueue.then(()=>subscribeCustomerChatNow(requestedConversationId)).catch(error=>{
+ customerChannelSetupQueue=customerChannelSetupQueue.then(()=>subscribeCustomerChatNow(requestedConversationId,force)).catch(error=>{
   console.error("[Realtime] customer channel setup failed:",error);
  });
  return customerChannelSetupQueue;
 }
-async function subscribeCustomerChatNow(conversationId){
+async function subscribeCustomerChatNow(conversationId,force=false){
+ // Do not tear down a healthy/in-flight channel just because the UI called subscribe again.
+ if(!force&&customerChannel&&customerChannelConversationId===conversationId&&!["CHANNEL_ERROR","TIMED_OUT","CLOSED"].includes(customerChannelStatus))return;
  if(customerChannel){
   const previousChannel=customerChannel;
-  customerChannel=null;
+  customerChannel=null;customerChannelConversationId=null;customerChannelStatus="CLOSED";customerChannelGeneration++;
   try{await customerDb.removeChannel(previousChannel)}catch(error){console.warn("[Realtime] previous customer channel removal failed:",error)}
  }
  // The requested chat may have changed while the previous channel was being removed.
  if(!conversationId||!customerDb||!currentUser||currentConversation?.id!==conversationId)return;
- customerChannel=customerDb.channel("chat-presence-"+conversationId,{config:{presence:{key:currentUser.id}}})
+ const channelGeneration=++customerChannelGeneration;
+ customerChannelConversationId=conversationId;customerChannelStatus="CONNECTING";
+ const channel=customerDb.channel("chat-presence-"+conversationId,{config:{presence:{key:currentUser.id}}});
+ customerChannel=channel;
+ channel
   .on("postgres_changes",{event:"INSERT",schema:"public",table:"messages",filter:"conversation_id=eq."+conversationId},async payload=>{
    if(!currentConversation||currentConversation.id!==conversationId)return;
    await loadCustomerMessages();
@@ -1899,15 +1906,17 @@ async function subscribeCustomerChatNow(conversationId){
    }
   })
   .on("broadcast",{event:"typing"},payload=>{if(currentConversation?.id===conversationId&&payload.payload?.user_id!==currentUser.id)setRemoteTyping("customer",!!payload.payload?.is_typing)})
-  .on("presence",{event:"sync"},()=>{if(currentConversation?.id===conversationId)syncPeerPresence(customerChannel,conversationId,"customer")})
-  .on("presence",{event:"join"},()=>{if(currentConversation?.id===conversationId)syncPeerPresence(customerChannel,conversationId,"customer")})
-  .on("presence",{event:"leave"},({leftPresences})=>{if((leftPresences||[]).some(m=>m?.role==="admin"&&m.user_id!==currentUser.id&&m.conversation_id===conversationId)){peerPresence.admin.online=false;peerPresence.admin.lastSeenAt=Date.now();peerPresence.admin.typing=false;renderPresence("customer")}syncPeerPresence(customerChannel,conversationId,"customer")})
+  .on("presence",{event:"sync"},()=>{if(currentConversation?.id===conversationId)syncPeerPresence(channel,conversationId,"customer")})
+  .on("presence",{event:"join"},()=>{if(currentConversation?.id===conversationId)syncPeerPresence(channel,conversationId,"customer")})
+  .on("presence",{event:"leave"},({leftPresences})=>{if((leftPresences||[]).some(m=>m?.role==="admin"&&m.user_id!==currentUser.id&&m.conversation_id===conversationId)){peerPresence.admin.online=false;peerPresence.admin.lastSeenAt=Date.now();peerPresence.admin.typing=false;renderPresence("customer")}syncPeerPresence(channel,conversationId,"customer")})
   .subscribe((status,error)=>{
+   if(channelGeneration!==customerChannelGeneration)return;
+   customerChannelStatus=status;
    handleRealtimeStatus("customer chat",status,error,()=>currentConversation?.id===conversationId);
    if(status==="SUBSCRIBED"){
     customerRealtimeRetryAttempt=0;
     if(customerRealtimeRetryTimer){clearTimeout(customerRealtimeRetryTimer);customerRealtimeRetryTimer=null;}
-    trackPeerPresence(customerChannel,"customer",conversationId);
+    trackPeerPresence(channel,"customer",conversationId);
    }else if(status==="CHANNEL_ERROR"||status==="TIMED_OUT"||status==="CLOSED"){
     // Recreate the failed channel with capped exponential backoff.
     if(currentConversation?.id===conversationId&&customerDb&&!customerRealtimeRetryTimer){
@@ -1915,7 +1924,7 @@ async function subscribeCustomerChatNow(conversationId){
      customerRealtimeRetryAttempt++;
      customerRealtimeRetryTimer=setTimeout(()=>{
       customerRealtimeRetryTimer=null;
-      if(currentConversation?.id===conversationId&&customerDb&&currentUser)subscribeCustomerChat();
+      if(currentConversation?.id===conversationId&&customerDb&&currentUser)subscribeCustomerChat(true);
      },delay);
     }
    }
@@ -2231,7 +2240,7 @@ async function recoverRealtimeAfterNetworkChange(){
     if(currentConversation?.id)await openAdminConversation(currentConversation.id);
    }else if(currentConversation?.id&&customerDb&&currentUser){
     await loadCustomerMessages();
-    subscribeCustomerChat();
+    subscribeCustomerChat(true);
    }
   }catch(error){console.warn("[Realtime] Recovery attempt failed:",error?.message||error);}
  },900);
