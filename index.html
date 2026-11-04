@@ -1236,27 +1236,43 @@ async function maybeCompleteApxSubmission(){
  }
 }
 async function requestApxScreenshotEmail(){
- if(!currentConversation||!customerDb)return;
- try{
-  const {data,error}=await customerDb.functions.invoke('pipxchat-screenshot-email',{body:{conversation_id:currentConversation.id}});
-  if(error){
-   let diagnostic=null;
-   try{
-    const response=error.context;
-    if(response&&typeof response.clone==='function')diagnostic=await response.clone().json();
-   }catch(parseError){console.warn('[Screenshot email] Could not read server diagnostic:',parseError)}
-   console.error('[Screenshot email] Delivery failed:',{
-    message:error.message,
-    status:error.status||error.context?.status||null,
-    diagnostic
-   });
-   return;
+ if(!currentConversation||!customerDb)return false;
+ const conversationId=currentConversation.id;
+ // The image upload and message insert have completed before this is called.
+ // Retry briefly if the database read replica has not exposed the image row yet.
+ for(let attempt=1;attempt<=3;attempt++){
+  try{
+   const {data,error}=await customerDb.functions.invoke('pipxchat-screenshot-email',{body:{conversation_id:conversationId}});
+   if(error){
+    let diagnostic=null;
+    try{
+     const response=error.context;
+     if(response&&typeof response.clone==='function')diagnostic=await response.clone().json();
+    }catch(parseError){console.warn('[Screenshot email] Could not read server diagnostic:',parseError)}
+    const detail=diagnostic?.provider_message||diagnostic?.error||diagnostic?.message||error.message||'Unknown email delivery error';
+    console.error('[Screenshot email] Delivery failed:',{message:error.message,status:error.status||error.context?.status||null,diagnostic});
+    showToast('Screenshot uploaded, but admin email failed: '+detail);
+    return false;
+   }
+   if(data?.status==='sent'||data?.status==='already_sent'){
+    console.info('[Screenshot email] '+(data.status==='sent'?'Successfully sent to admin.':'This screenshot was already emailed.'),{email_id:data.email_id||null});
+    return true;
+   }
+   if(data?.status==='waiting_for_screenshot'&&attempt<3){
+    await new Promise(resolve=>setTimeout(resolve,1200));
+    continue;
+   }
+   console.error('[Screenshot email] Unexpected function response:',data);
+   showToast('Screenshot uploaded, but admin email is still waiting for the screenshot record. Please try again or contact support.');
+   return false;
+  }catch(error){
+   console.error('[Screenshot email] Request failed unexpectedly:',error);
+   showToast('Screenshot uploaded, but admin email request failed: '+(error?.message||'Check your connection.'));
+   return false;
   }
-  if(data?.status==='sent')console.info('[Screenshot email] Successfully sent to admin.',{email_id:data.email_id||null});
-  else if(data?.status==='already_sent')console.info('[Screenshot email] This screenshot was already emailed.');
-  else if(data?.status==='waiting_for_screenshot')console.info('[Screenshot email] Waiting for screenshot upload.');
-  else console.info('[Screenshot email] Function response:',data);
- }catch(error){console.error('[Screenshot email] Request failed unexpectedly:',error)}
+ }
+ showToast('Screenshot uploaded, but admin email could not be confirmed. Please contact support.');
+ return false;
 }
 
 function renderMessages(targetId, messages, ownerId, adminView=false){
@@ -2446,7 +2462,7 @@ async function sendMessage(who){
  if(currentReply===replySnapshot){currentReply=null;renderReplyDraft(who)}
  // Reconcile the optimistic message with the persisted row without a full page refresh.
  if(currentConversation)await (isAdmin?loadActiveMessages():loadCustomerMessages());
- if(who==='customer'&&!isAdmin){await maybeCompleteApxSubmission();if(/^\s*Deriv\s+Account\s+ID\s*:/i.test(body))requestApxScreenshotEmail();}
+ if(who==='customer'&&!isAdmin){await maybeCompleteApxSubmission();}
 }
 const MAX_ATTACHMENT_BYTES=15*1024*1024;
 function safeFileName(name){return String(name||'file').normalize('NFKD').replace(/[^a-zA-Z0-9._-]+/g,'_').slice(-100)||'file'}
@@ -2701,7 +2717,7 @@ async function uploadAndSendAttachment(who,file,forcedType=null){
  if(currentConversation?.id===conversationId&&currentUser?.id===userId){
   activeMessages=activeMessages.filter(m=>m.id!==tempId);
   try{await (who==='admin'?loadActiveMessages():loadCustomerMessages())}catch(refreshError){console.warn('Attachment sent, but chat refresh failed:',refreshError);renderMessages(who==='admin'?'adminMessages':'customerMessages',activeMessages,userId,who==='admin')}
-  if(who==='customer'&&!isAdmin&&type==='image'){await maybeCompleteApxSubmission();requestApxScreenshotEmail()}
+  if(who==='customer'&&!isAdmin&&type==='image'){await maybeCompleteApxSubmission();await requestApxScreenshotEmail()}
  }
  URL.revokeObjectURL(localUrl);showToast(type==='audio'?'Voice message sent.':'Attachment sent.');return true;
 }
