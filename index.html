@@ -834,6 +834,11 @@ body:has(#customerChat:not(.hidden)) .top-title{font-family:Arial,Helvetica,sans
 @media(prefers-color-scheme:light){.top-title{color:#fff}}
 @media(prefers-color-scheme:dark){.top-title{color:#e9edef}}
 </style>
+<style id="pipxchat-hide-internal-config-notice">
+/* Keep internal setup diagnostics out of the customer-facing interface.
+   Diagnostic logic remains intact and errors are still available in the console. */
+#configNotice{display:none!important;visibility:hidden!important}
+</style>
 </head>
 <body>
 <div class="app">
