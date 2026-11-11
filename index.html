@@ -15,7 +15,7 @@
 <style>
 :root{color-scheme:light;--app:#efeae2;--panel:#fff;--header:#075e54;--header2:#128c7e;--text:#111b21;--muted:#667781;--line:#e7e9eb;--incoming:#fff;--outgoing:#d9fdd3;--input:#f0f2f5;--accent:#008069;--danger:#b42318;--shadow:0 8px 32px #0b141a1a}
 @media(prefers-color-scheme:dark){:root{color-scheme:dark;--app:#0b141a;--panel:#111b21;--header:#202c33;--header2:#202c33;--text:#e9edef;--muted:#8696a0;--line:#26343d;--incoming:#202c33;--outgoing:#005c4b;--input:#202c33;--accent:#00a884;--danger:#ff6b6b;--shadow:0 8px 32px #0005}.messages:before{background-image:none;opacity:.48;filter:none}}
-*{box-sizing:border-box}html,body{height:100%;margin:0;font-family:"Segoe UI","Helvetica Neue",Helvetica,Arial,Ubuntu,Cantarell,Roboto,sans-serif;font-size:14px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;background:var(--app);color:var(--text)}body{overflow:hidden}button,input,textarea{font:inherit}button{cursor:pointer;border:0}button:disabled{opacity:.5;cursor:not-allowed}.hidden{display:none!important}.app{height:100dvh;height:100svh;display:flex;flex-direction:column;max-width:1180px;margin:auto;background:var(--panel);box-shadow:var(--shadow);position:relative}.topbar{height:64px;flex-shrink:0;background:var(--header);color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}.brandmark{width:40px;height:40px;border-radius:50%;background:#ffffff24;display:grid;place-items:center;font-size:20px}.top-title{font-weight:600;font-size:16px;letter-spacing:0}.top-sub{font-size:12px;color:#d0e7e4;margin-top:3px}.top-spacer{flex:1}.admin-entry{background:#ffffff1c;color:#fff;border:1px solid #ffffff40;border-radius:999px;padding:9px 13px;font-size:12px;font-weight:700;white-space:nowrap}.admin-entry:hover{background:#ffffff2b}.admin-entry.chat-here-mode{background:#25d366;color:#073b2d;border-color:#25d366}.admin-entry.chat-here-mode:hover{filter:brightness(1.06)}.admin-entry.customer-session-mode{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:8px 13px;background:#25d366;color:#073b2d;border:1px solid #25d366;border-radius:999px;font-family:inherit;font-size:12px;font-weight:750;letter-spacing:.1px;box-shadow:0 3px 9px #25d36630;transition:background .16s ease,box-shadow .16s ease,transform .16s ease}.admin-entry.customer-session-mode:hover{background:#35df75;box-shadow:0 5px 13px #25d36642;transform:translateY(-1px)}.admin-entry.customer-session-mode:active{transform:translateY(0);box-shadow:0 1px 4px #25d36628}.admin-entry.customer-session-mode svg{width:15px;height:15px;flex:0 0 15px;stroke:currentColor;stroke-width:1.9;fill:none;stroke-linecap:round;stroke-linejoin:round}.admin-entry.customer-session-mode:focus-visible{outline:2px solid var(--accent);outline-offset:3px}.iconbtn{width:40px;height:40px;border-radius:50%;background:transparent;color:inherit;font-size:20px;display:grid;place-items:center}.iconbtn:hover{background:#ffffff18}.screen{flex:1;min-height:0;display:flex}.welcome{margin:auto;width:min(440px,calc(100% - 32px));background:var(--panel);padding:28px 24px;border:1px solid var(--line);border-top:4px solid #25d366;border-radius:20px;box-shadow:var(--shadow);position:relative;overflow:hidden}.welcome:before{content:"";position:absolute;right:-34px;top:-42px;width:130px;height:130px;border-radius:50%;background:#25d36612;pointer-events:none}.welcome-brand{display:flex;align-items:center;gap:12px;margin-bottom:22px;position:relative}.wa-logo{width:58px;height:58px;flex:0 0 58px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 5px 14px #25d36640}.wa-logo svg{width:38px;height:38px;display:block}.welcome-brand-title{font-weight:600;font-size:17px;letter-spacing:0}.welcome-brand-sub{font-size:12px;color:var(--muted);margin-top:3px}.support-online{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--accent);margin-top:7px}.support-online:before{content:"";width:7px;height:7px;border-radius:50%;background:#25d366;box-shadow:0 0 0 3px #25d36620}.welcome h1{font-size:23px;font-weight:600;line-height:1.3;letter-spacing:-.25px;margin:0 0 8px;position:relative}.welcome p{color:var(--muted);line-height:1.55;margin:0 0 22px;position:relative}.welcome .field{border-radius:12px;padding:15px}.welcome .primary{border-radius:12px;box-shadow:0 3px 8px #00806925}.welcome .whatsapp-submit{background:#25d366;color:#073b2d;border:0;border-radius:999px;padding:15px 18px;font-size:15px;font-weight:700;letter-spacing:.1px;box-shadow:0 5px 14px #25d36638;transition:transform .15s ease,box-shadow .15s ease,filter .15s ease}.welcome .whatsapp-submit:hover{filter:brightness(1.04);box-shadow:0 7px 18px #25d36650;transform:translateY(-1px)}.welcome .whatsapp-submit:active{transform:translateY(0);box-shadow:0 2px 7px #25d36630}.welcome .whatsapp-submit:disabled{filter:grayscale(.15);transform:none;box-shadow:none}.smallnote{font-size:12px;color:var(--muted);line-height:1.5;margin-top:14px}.field{width:100%;border:1px solid var(--line);border-radius:10px;padding:14px 13px;background:var(--input);color:var(--text);outline:none}.field:focus{border-color:var(--accent)}.primary{background:var(--accent);color:#fff;border-radius:10px;padding:13px 16px;font-weight:700}.primary:hover{filter:brightness(1.05)}.full{width:100%;margin-top:12px}.smallnote{font-size:12px;color:var(--muted);line-height:1.5;margin-top:14px}.chat-shell{display:flex;flex:1;min-height:0;flex-direction:column}.chat-head{display:flex;align-items:center;gap:10px;padding:9px 14px;background:var(--header);color:#fff;min-height:62px}.avatar{height:42px;width:42px;border-radius:50%;background:#dfe5e7;color:#45636b;display:grid;place-items:center;font-weight:700;flex-shrink:0}.chat-person{min-width:0;flex:1}.person-name{display:flex;align-items:center;gap:5px;font-weight:600;font-size:15px;letter-spacing:0}.person-sub{font-size:12px;color:#d2e5e2;margin-top:3px}.verified{width:17px;height:17px;flex-shrink:0}.messages{flex:1;min-height:0;overflow:auto;padding:16px max(12px,calc((100% - 780px)/2));position:relative;isolation:isolate;background-color:var(--app);background-image:none;scroll-behavior:smooth;overscroll-behavior:contain}.messages:before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background-image:none;background-repeat:repeat;background-size: min(736px, 100%) auto;background-position:center top;opacity:.72;filter:none}.messages>*{position:relative;z-index:1}.message-link{color:var(--accent);text-decoration:underline;text-underline-offset:2px;overflow-wrap:anywhere}.message-link:hover{opacity:.78}.bubble{overflow-wrap:anywhere;word-break:normal;min-width:0;max-width:min(82%,540px)}.bubble>div,.bubble .apx-flow-copy,.bubble .apx-ib-copy{max-width:100%;overflow-wrap:anywhere;word-break:break-word}.bubble-row{display:flex;min-width:0;margin:4px 0;align-items:flex-end;gap:5px}.bubble-row.mine{justify-content:flex-end}.bubble{max-width:min(82%,540px);padding:8px 9px 6px;border-radius:8px;background:var(--incoming);box-shadow:0 1px 1px #00000012;overflow-wrap:anywhere;white-space:pre-wrap;font-size:14.2px;line-height:1.42;letter-spacing:0}.mine .bubble{background:var(--outgoing)}.reply-preview{border-left:3px solid var(--accent);background:#00806912;border-radius:4px;padding:5px 7px;margin-bottom:5px;font-size:12px;color:var(--muted);cursor:pointer}.bubble-meta{display:flex;justify-content:flex-end;align-items:center;gap:4px;font-size:10px;color:var(--muted);margin:4px 0 0 12px;float:right;padding-left:10px;position:relative;top:2px}.tick{font-size:13px;color:#53a6d8}.message-action{opacity:.55}.message-action:hover{opacity:1;background:var(--input)}.composer-wrap{flex-shrink:0;background:var(--app);padding:8px max(8px,calc((100% - 800px)/2));padding-bottom:max(8px,env(safe-area-inset-bottom));display:flex;gap:7px;align-items:flex-end}.composer-tools{display:flex;align-items:center;gap:2px}.composer{flex:1;display:flex;align-items:flex-end;background:var(--input);border-radius:24px;padding:4px 7px;min-width:0}.composer textarea{border:0;outline:0;resize:none;max-height:120px;min-height:38px;padding:10px 7px;background:transparent;color:var(--text);width:100%;line-height:18px}.sendbtn{background:var(--accent);color:white;width:44px;height:44px;border-radius:50%;font-size:18px;flex-shrink:0}.typing{height:20px;padding:0 16px;color:var(--muted);font-size:12px;background:var(--app)}.typing-dots{letter-spacing:2px}.admin-layout{flex:1;min-height:0;display:flex}.inbox{width:340px;max-width:42%;border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0;background:var(--panel)}.inbox-head{padding:15px;border-bottom:1px solid var(--line);font-weight:700;display:flex;align-items:center;justify-content:space-between}.search-wrap{padding:10px;background:var(--panel)}.search-wrap input{border:0;background:var(--input);border-radius:8px;padding:11px;width:100%;color:var(--text);outline:0}.conversation-list{overflow:auto;flex:1}.conv-item{display:flex;gap:11px;padding:13px 12px;border-bottom:1px solid var(--line);cursor:pointer}.conv-item:hover,.conv-item.active{background:var(--input)}.conv-item{content-visibility:auto;contain-intrinsic-size:auto 72px}.conv-info{min-width:0;flex:1}.conv-line{display:flex;justify-content:space-between;gap:6px}.conv-name{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.conv-time{font-size:11px;color:var(--muted);white-space:nowrap}.conv-preview{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:6px}.unread{background:var(--accent);color:white;border-radius:20px;min-width:19px;height:19px;padding:0 5px;display:inline-grid;place-items:center;font-size:11px}.admin-chat{flex:1;min-width:0;display:flex;flex-direction:column}.empty-state{flex:1;display:grid;place-items:center;text-align:center;padding:24px;color:var(--muted)}.empty-state strong{display:block;color:var(--text);font-size:18px;margin-bottom:7px}.admin-login{margin:auto;width:min(400px,calc(100% - 30px));padding:24px;background:var(--panel);box-shadow:var(--shadow);border-radius:16px}.admin-login h2{margin-top:0}.admin-login label{font-size:13px;display:block;margin:12px 0 6px}.error{color:var(--danger);font-size:13px;margin-top:10px;white-space:pre-wrap}.toast{position:absolute;bottom:82px;left:50%;transform:translateX(-50%);background:#202c33;color:white;padding:10px 15px;border-radius:22px;font-size:13px;z-index:20;max-width:90%;text-align:center;box-shadow:var(--shadow)}.notice{padding:8px 12px;background:#fff3cd;color:#664d03;font-size:12px;line-height:1.45}.notice a{color:inherit}.modal-backdrop{position:absolute;inset:0;background:#0008;display:grid;place-items:center;padding:20px;z-index:10}.modal{width:min(420px,100%);background:var(--panel);border-radius:14px;padding:20px;box-shadow:var(--shadow)}.modal h3{margin-top:0}.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:18px}.secondary{background:var(--input);color:var(--text);border-radius:9px;padding:11px 14px}.statusbar{font-size:11px;color:var(--muted);padding:4px 12px;background:var(--app);text-align:center}.desktop-only{display:inline}.mobile-back{display:none}.reply-draft{margin:0 10px 0;background:var(--input);border-left:3px solid var(--accent);border-radius:8px;padding:8px 10px;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}.reply-draft .reply-copy{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.reply-draft button{background:transparent;color:var(--muted);font-size:18px;padding:0 4px}.emoji-tray{display:flex;gap:5px;flex-wrap:wrap;padding:8px;background:var(--panel);border-top:1px solid var(--line)}.emoji-tray button{font-size:21px;background:transparent;border-radius:8px;padding:5px}.emoji-tray button:hover{background:var(--input)}.attachment-img{display:block;max-width:min(280px,100%);max-height:300px;object-fit:contain;border-radius:7px;margin:2px 0 5px}.attachment-link{display:inline-flex;align-items:center;gap:8px;color:var(--accent);font-weight:600;text-decoration:none;padding:8px 2px}.voice-player{display:block;width:min(270px,100%);height:40px;margin:4px 0}.recording{background:#b42318!important;animation:pulse 1s infinite}@keyframes pulse{50%{opacity:.55}}.upload-progress{font-size:12px;color:var(--muted);padding:2px 12px 5px}.filebtn{font-size:22px}
+*{box-sizing:border-box}html,body{height:100%;margin:0;font-family:"Segoe UI","Helvetica Neue",Helvetica,Arial,Ubuntu,Cantarell,Roboto,sans-serif;font-size:14px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;background:var(--app);color:var(--text)}body{overflow:hidden}button,input,textarea{font:inherit}button{cursor:pointer;border:0}button:disabled{opacity:.5;cursor:not-allowed}.hidden{display:none!important}.app{height:100dvh;height:100svh;display:flex;flex-direction:column;max-width:1180px;margin:auto;background:var(--panel);box-shadow:var(--shadow);position:relative}.topbar{height:64px;flex-shrink:0;background:var(--header);color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px}.brandmark{width:40px;height:40px;border-radius:50%;background:#ffffff24;display:grid;place-items:center;font-size:20px}.top-title{font-weight:600;font-size:16px;letter-spacing:0}.top-sub{font-size:12px;color:#d0e7e4;margin-top:3px}.top-spacer{flex:1}.admin-entry{background:#ffffff1c;color:#fff;border:1px solid #ffffff40;border-radius:999px;padding:9px 13px;font-size:12px;font-weight:700;white-space:nowrap}.admin-entry:hover{background:#ffffff2b}.admin-entry.chat-here-mode{background:#25d366;color:#073b2d;border-color:#25d366}.admin-entry.chat-here-mode:hover{filter:brightness(1.06)}.admin-entry.customer-session-mode{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:8px 13px;background:#25d366;color:#073b2d;border:1px solid #25d366;border-radius:999px;font-family:inherit;font-size:12px;font-weight:750;letter-spacing:.1px;box-shadow:0 3px 9px #25d36630;transition:background .16s ease,box-shadow .16s ease,transform .16s ease}.admin-entry.customer-session-mode:hover{background:#35df75;box-shadow:0 5px 13px #25d36642;transform:translateY(-1px)}.admin-entry.customer-session-mode:active{transform:translateY(0);box-shadow:0 1px 4px #25d36628}.admin-entry.customer-session-mode svg{width:15px;height:15px;flex:0 0 15px;stroke:currentColor;stroke-width:1.9;fill:none;stroke-linecap:round;stroke-linejoin:round}.admin-entry.customer-session-mode:focus-visible{outline:2px solid var(--accent);outline-offset:3px}.iconbtn{width:40px;height:40px;border-radius:50%;background:transparent;color:inherit;font-size:20px;display:grid;place-items:center}.iconbtn:hover{background:#ffffff18}.screen{flex:1;min-height:0;display:flex}.welcome{margin:auto;width:min(440px,calc(100% - 32px));background:var(--panel);padding:28px 24px;border:1px solid var(--line);border-top:4px solid #25d366;border-radius:20px;box-shadow:var(--shadow);position:relative;overflow:hidden}.welcome:before{content:"";position:absolute;right:-34px;top:-42px;width:130px;height:130px;border-radius:50%;background:#25d36612;pointer-events:none}.welcome-brand{display:flex;align-items:center;gap:12px;margin-bottom:22px;position:relative}.wa-logo{width:58px;height:58px;flex:0 0 58px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 5px 14px #25d36640}.wa-logo svg{width:38px;height:38px;display:block}.welcome-brand-title{font-weight:600;font-size:17px;letter-spacing:0}.welcome-brand-sub{font-size:12px;color:var(--muted);margin-top:3px}.support-online{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--accent);margin-top:7px}.support-online:before{content:"";width:7px;height:7px;border-radius:50%;background:#25d366;box-shadow:0 0 0 3px #25d36620}.welcome h1{font-size:23px;font-weight:600;line-height:1.3;letter-spacing:-.25px;margin:0 0 8px;position:relative}.welcome p{color:var(--muted);line-height:1.55;margin:0 0 22px;position:relative}.welcome .field{border-radius:12px;padding:15px}.welcome .primary{border-radius:12px;box-shadow:0 3px 8px #00806925}.welcome .whatsapp-submit{background:#25d366;color:#073b2d;border:0;border-radius:999px;padding:15px 18px;font-size:15px;font-weight:700;letter-spacing:.1px;box-shadow:0 5px 14px #25d36638;transition:transform .15s ease,box-shadow .15s ease,filter .15s ease}.welcome .whatsapp-submit:hover{filter:brightness(1.04);box-shadow:0 7px 18px #25d36650;transform:translateY(-1px)}.welcome .whatsapp-submit:active{transform:translateY(0);box-shadow:0 2px 7px #25d36630}.welcome .whatsapp-submit:disabled{filter:grayscale(.15);transform:none;box-shadow:none}.smallnote{font-size:12px;color:var(--muted);line-height:1.5;margin-top:14px}.field{width:100%;border:1px solid var(--line);border-radius:10px;padding:14px 13px;background:var(--input);color:var(--text);outline:none}.field:focus{border-color:var(--accent)}.primary{background:var(--accent);color:#fff;border-radius:10px;padding:13px 16px;font-weight:700}.primary:hover{filter:brightness(1.05)}.full{width:100%;margin-top:12px}.smallnote{font-size:12px;color:var(--muted);line-height:1.5;margin-top:14px}.chat-shell{display:flex;flex:1;min-height:0;flex-direction:column}.chat-head{display:flex;align-items:center;gap:10px;padding:9px 14px;background:var(--header);color:#fff;min-height:62px}.avatar{height:42px;width:42px;border-radius:50%;background:#dfe5e7;color:#45636b;display:grid;place-items:center;font-weight:700;flex-shrink:0}.chat-person{min-width:0;flex:1}.person-name{display:flex;align-items:center;gap:5px;font-weight:600;font-size:15px;letter-spacing:0}.person-sub{font-size:12px;color:#d2e5e2;margin-top:3px}.verified{width:17px;height:17px;flex-shrink:0}.messages{flex:1;min-height:0;overflow:auto;padding:16px max(12px,calc((100% - 780px)/2));position:relative;isolation:isolate;background-color:var(--app);background-image:none;scroll-behavior:smooth;overscroll-behavior:contain}.messages:before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background-image:none;background-repeat:repeat;background-size: min(736px, 100%) auto;background-position:center top;opacity:.72;filter:none}.messages>*{position:relative;z-index:1}.message-link{color:var(--accent);text-decoration:underline;text-underline-offset:2px;overflow-wrap:anywhere}.message-link:hover{opacity:.78}.bubble{overflow-wrap:anywhere;word-break:normal;min-width:0;max-width:min(82%,540px)}.bubble>div,.bubble .apx-flow-copy,.bubble .apx-ib-copy{max-width:100%;overflow-wrap:anywhere;word-break:break-word}.bubble-row{display:flex;min-width:0;margin:4px 0;align-items:flex-end;gap:5px}.bubble-row.mine{justify-content:flex-end}.bubble{max-width:min(82%,540px);padding:8px 9px 6px;border-radius:8px;background:var(--incoming);box-shadow:0 1px 1px #00000012;overflow-wrap:anywhere;white-space:pre-wrap;font-size:14.2px;line-height:1.42;letter-spacing:0}.mine .bubble{background:var(--outgoing)}.reply-preview{border-left:3px solid var(--accent);background:#00806912;border-radius:4px;padding:5px 7px;margin-bottom:5px;font-size:12px;color:var(--muted);cursor:pointer}.bubble-meta{display:flex;justify-content:flex-end;align-items:center;gap:4px;font-size:10px;color:var(--muted);margin:4px 0 0 12px;float:right;padding-left:10px;position:relative;top:2px}.tick{font-size:13px;color:#53a6d8}.message-action{opacity:.55}.message-action:hover{opacity:1;background:var(--input)}.composer-wrap{flex-shrink:0;background:var(--app);padding:8px max(8px,calc((100% - 800px)/2));padding-bottom:max(8px,env(safe-area-inset-bottom));display:flex;gap:7px;align-items:flex-end}.composer-tools{display:flex;align-items:center;gap:2px}.composer{flex:1;display:flex;align-items:flex-end;background:var(--input);border-radius:24px;padding:4px 7px;min-width:0}.composer textarea{border:0;outline:0;resize:none;max-height:120px;min-height:38px;padding:10px 7px;background:transparent;color:var(--text);width:100%;line-height:18px}.sendbtn{background:var(--accent);color:white;width:44px;height:44px;border-radius:50%;font-size:18px;flex-shrink:0}.typing{height:20px;padding:0 16px;color:var(--muted);font-size:12px;background:var(--app)}.automated-typing-row{display:flex;justify-content:flex-start;margin:5px 0 8px;pointer-events:none}.automated-typing-bubble{display:inline-flex;align-items:center;gap:9px;min-height:38px;padding:8px 12px;border-radius:10px 10px 10px 3px;background:var(--incoming);box-shadow:0 1px 2px #00000012;color:var(--muted);font-size:12px}.automated-typing-bubble .wa-typing-dots{color:var(--accent)}.automated-typing-bubble .wa-typing-dots i{width:5px;height:5px}.typing-dots{letter-spacing:2px}.admin-layout{flex:1;min-height:0;display:flex}.inbox{width:340px;max-width:42%;border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0;background:var(--panel)}.inbox-head{padding:15px;border-bottom:1px solid var(--line);font-weight:700;display:flex;align-items:center;justify-content:space-between}.search-wrap{padding:10px;background:var(--panel)}.search-wrap input{border:0;background:var(--input);border-radius:8px;padding:11px;width:100%;color:var(--text);outline:0}.conversation-list{overflow:auto;flex:1}.conv-item{display:flex;gap:11px;padding:13px 12px;border-bottom:1px solid var(--line);cursor:pointer}.conv-item:hover,.conv-item.active{background:var(--input)}.conv-item{content-visibility:auto;contain-intrinsic-size:auto 72px}.conv-info{min-width:0;flex:1}.conv-line{display:flex;justify-content:space-between;gap:6px}.conv-name{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.conv-time{font-size:11px;color:var(--muted);white-space:nowrap}.conv-preview{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:6px}.unread{background:var(--accent);color:white;border-radius:20px;min-width:19px;height:19px;padding:0 5px;display:inline-grid;place-items:center;font-size:11px}.admin-chat{flex:1;min-width:0;display:flex;flex-direction:column}.empty-state{flex:1;display:grid;place-items:center;text-align:center;padding:24px;color:var(--muted)}.empty-state strong{display:block;color:var(--text);font-size:18px;margin-bottom:7px}.admin-login{margin:auto;width:min(400px,calc(100% - 30px));padding:24px;background:var(--panel);box-shadow:var(--shadow);border-radius:16px}.admin-login h2{margin-top:0}.admin-login label{font-size:13px;display:block;margin:12px 0 6px}.error{color:var(--danger);font-size:13px;margin-top:10px;white-space:pre-wrap}.toast{position:absolute;bottom:82px;left:50%;transform:translateX(-50%);background:#202c33;color:white;padding:10px 15px;border-radius:22px;font-size:13px;z-index:20;max-width:90%;text-align:center;box-shadow:var(--shadow)}.notice{padding:8px 12px;background:var(--notice-bg);color:var(--notice-text);font-size:12px;line-height:1.45}.notice a{color:inherit}.modal-backdrop{position:absolute;inset:0;background:#0008;display:grid;place-items:center;padding:20px;z-index:10}.modal{width:min(420px,100%);background:var(--panel);border-radius:14px;padding:20px;box-shadow:var(--shadow)}.modal h3{margin-top:0}.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:18px}.secondary{background:var(--input);color:var(--text);border-radius:9px;padding:11px 14px}.statusbar{font-size:11px;color:var(--muted);padding:4px 12px;background:var(--app);text-align:center}.desktop-only{display:inline}.mobile-back{display:none}.reply-draft{margin:0 10px 0;background:var(--input);border-left:3px solid var(--accent);border-radius:8px;padding:8px 10px;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}.reply-draft .reply-copy{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.reply-draft button{background:transparent;color:var(--muted);font-size:18px;padding:0 4px}.emoji-tray{display:flex;gap:5px;flex-wrap:wrap;padding:8px;background:var(--panel);border-top:1px solid var(--line)}.emoji-tray button{font-size:21px;background:transparent;border-radius:8px;padding:5px}.emoji-tray button:hover{background:var(--input)}.attachment-img{display:block;max-width:min(280px,100%);max-height:300px;object-fit:contain;border-radius:7px;margin:2px 0 5px}.attachment-link{display:inline-flex;align-items:center;gap:8px;color:var(--accent);font-weight:600;text-decoration:none;padding:8px 2px}.voice-player{display:block;width:min(270px,100%);height:40px;margin:4px 0}.recording{background:#b42318!important;animation:pulse 1s infinite}@keyframes pulse{50%{opacity:.55}}.upload-progress{font-size:12px;color:var(--muted);padding:2px 12px 5px}.filebtn{font-size:22px}
 @media(min-width:850px){.app{height:100dvh;max-width:1180px;margin:0 auto}.topbar{height:64px}.screen{border:1px solid var(--line)}}
 @media(max-width:650px){.topbar{height:58px;padding:0 10px}.welcome{padding:24px 20px}.inbox{width:100%;max-width:100%;border-right:0}.admin-layout.mobile-chat-open .inbox{display:none}.admin-layout:not(.mobile-chat-open) .admin-chat{display:none}.mobile-back{display:grid}.desktop-only{display:none}.chat-head{padding:8px 10px}.messages{padding:12px 10px}.bubble{max-width:88%}.composer-wrap{gap:4px;padding-left:5px;padding-right:5px}.composer-tools .iconbtn{width:34px;height:40px}.inbox-head{padding:13px}.notice{font-size:11px}}
 
@@ -98,11 +98,11 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
 #adminConversation .iconbtn:hover{background:var(--input)}
 #adminConversation .composer-wrap{background:var(--app)}
 #adminConversation .typing{background:var(--app)}
-.notice{background:#fff3cd;color:#664d03;border-top:1px solid #f0dda0}
+.notice{background:var(--notice-bg);color:var(--notice-text);border-top:1px solid var(--notice-border)}
 @media(prefers-color-scheme:dark){
  .welcome,.admin-login{box-shadow:0 12px 36px #0003}
  .avatar{background:#214d43;color:#d9fdd3}
- .notice{background:#3a321c;color:#f7e7ad;border-top-color:#5b4b22}
+ .notice{background:var(--notice-bg);color:var(--notice-text);border-top-color:var(--notice-border)}
  .conv-item.active{background:color-mix(in srgb,var(--accent) 16%,var(--panel))}
  .admin-chat>.empty-state{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22320%22%20height%3D%22320%22%20viewBox%3D%220%200%20320%20320%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%2382958d%22%20stroke-opacity%3D%22.20%22%20stroke-width%3D%221.6%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M24%2034c0-9%207-16%2016-16s16%207%2016%2016-7%2016-16%2016h-6L24%2056l2-10c-1-3-2-7-2-12z%22%2F%3E%3Cpath%20d%3D%22M111%2025c-8%200-14%206-14%2014%200%207%206%2013%2014%2013h7l8%206-2-9c3-3%204-6%204-10%200-8-7-14-17-14z%22%2F%3E%3Cpath%20d%3D%22M110%2037h.1m11%200h.1m-10%207q5%205%2010%200%22%20stroke-width%3D%222.4%22%2F%3E%3Cpath%20d%3D%22m222%2019%204%209%2010%201-7%207%202%2010-9-5-9%205%202-10-7-7%2010-1z%22%2F%3E%3Cpath%20d%3D%22M273%2079h20a10%2010%200%200%201%2010%2010v12a10%2010%200%200%201-10%2010h-7l-8%207%201-7h-6a10%2010%200%200%201-10-10V89a10%2010%200%200%201%2010-10z%22%2F%3E%3Cpath%20d%3D%22M33%20115c-10-11-26%203-15%2015l15%2015%2015-15c11-12-5-26-15-15z%22%2F%3E%3Cpath%20d%3D%22M128%20103l17%2017m0-17-17%2017%22%2F%3E%3Ccircle%20cx%3D%22220%22%20cy%3D%22145%22%20r%3D%2216%22%2F%3E%3Cpath%20d%3D%22M213%20142h.1m14%200h.1m-13%207q6%207%2012%200%22%20stroke-width%3D%222.4%22%2F%3E%3Cpath%20d%3D%22M26%20201h29a12%2012%200%200%201%2012%2012v11a12%2012%200%200%201-12%2012H43l-9%208%201-8h-9a12%2012%200%200%201-12-12v-11a12%2012%200%200%201%2012-12z%22%2F%3E%3Cpath%20d%3D%22M144%20196c-5%200-9%204-9%209%200%204%202%207%205%209l-2%208%208-4h2c6%200%2010-5%2010-11s-5-11-11-11z%22%2F%3E%3Cpath%20d%3D%22M141%20207h.1m11%200h.1m-10%205q4%204%208%200%22%20stroke-width%3D%222.2%22%2F%3E%3Cpath%20d%3D%22m242%20202%204%208%209%201-7%206%202%209-8-5-8%205%202-9-7-6%209-1z%22%2F%3E%3Cpath%20d%3D%22M258%20268c0-9%207-16%2016-16s16%207%2016%2016-7%2016-16%2016h-6l-10%206%202-10c-1-3-2-7-2-12z%22%2F%3E%3Cpath%20d%3D%22M67%20273l10%2010m0-10-10%2010%22%2F%3E%3Cpath%20d%3D%22M151%20264c-8-9-21%202-12%2011l12%2012%2012-12c9-9-4-20-12-11z%22%2F%3E%3Ccircle%20cx%3D%22217%22%20cy%3D%2264%22%20r%3D%228%22%2F%3E%3Cpath%20d%3D%22M213%2064h8m-4-4v8%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E")}
 }
@@ -146,9 +146,9 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
 /* Final notification polish — AlgoPipX-inspired and automatically matched to the device theme. */
 :root {
   color-scheme: light dark;
-  --notice-bg: #e7fce3;
-  --notice-text: #164e3b;
-  --notice-border: #b7e7c1;
+  --notice-bg: color-mix(in srgb, var(--accent) 10%, var(--panel));
+  --notice-text: var(--text);
+  --notice-border: color-mix(in srgb, var(--accent) 34%, var(--line));
   --toast-bg: #ffffff;
   --toast-text: #111b21;
   --toast-border: #dce5e7;
@@ -156,9 +156,9 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --notice-bg: #123b32;
-    --notice-text: #d9fdd3;
-    --notice-border: #24594c;
+    --notice-bg: color-mix(in srgb, var(--accent) 15%, var(--panel));
+    --notice-text: var(--text);
+    --notice-border: color-mix(in srgb, var(--accent) 42%, var(--line));
     --toast-bg: #202c33;
     --toast-text: #e9edef;
     --toast-border: #34444c;
@@ -364,7 +364,7 @@ body:has(#customerChat:not(.hidden)) .top-sub{font-family:"Segoe UI","Helvetica 
 .apx-flow-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
 .apx-flow-btn:hover{border-color:var(--accent);transform:translateY(-1px)}
 .apx-flow-btn:disabled{opacity:.55;cursor:wait;transform:none}
-.apx-flow-note{font-size:11px;color:var(--muted);margin-top:9px}
+.apx-flow-note{font-size:11px;color:var(--muted);margin-top:9px}.apx-flow-warning{display:flex;gap:8px;align-items:flex-start;margin-top:11px;padding:9px 10px;border:1px solid color-mix(in srgb,var(--accent) 38%,var(--line));border-radius:9px;background:color-mix(in srgb,var(--accent) 9%,var(--panel));color:var(--text);font-size:11px;line-height:1.45}.apx-flow-warning>span:first-child{color:var(--accent);font-weight:800;flex:0 0 auto}.apx-flow-btn:disabled{opacity:.48;cursor:not-allowed;transform:none;filter:saturate(.6)}
 .apx-customer-id-panel{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:9px;margin-top:12px;padding:11px 12px;border:1px solid var(--line);border-radius:11px;background:var(--input);color:var(--text)}
 .apx-customer-id-label{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.02em}
 .apx-customer-id-value{display:block;margin-top:3px;font-size:16px;font-weight:800;letter-spacing:.12em;color:var(--text);font-variant-numeric:tabular-nums}
@@ -373,6 +373,11 @@ body:has(#customerChat:not(.hidden)) .top-sub{font-family:"Segoe UI","Helvetica 
 .apx-customer-id-copy:disabled{opacity:.55;cursor:wait;transform:none}
 @media(max-width:420px){.apx-customer-id-panel{align-items:stretch}.apx-customer-id-copy{width:100%}}
 .apx-flow-link{display:inline-flex;align-items:center;gap:6px;color:var(--accent);font-weight:700;text-decoration:none}
+.apx-telegram-cta{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin-top:12px;padding:11px 15px;border:1px solid #229ed9;border-radius:11px;background:#229ed9;color:#fff!important;font-family:inherit;font-size:12px;font-weight:700;line-height:1.25;text-align:center;text-decoration:none;box-shadow:0 3px 10px #229ed922;transition:transform .16s,filter .16s,box-shadow .16s}
+.apx-telegram-cta:hover{filter:brightness(1.06);transform:translateY(-1px);box-shadow:0 5px 14px #229ed933}
+.apx-telegram-cta:focus-visible{outline:3px solid color-mix(in srgb,#229ed9 40%,transparent);outline-offset:3px}
+.apx-telegram-cta svg{width:19px;height:19px;flex:0 0 19px;display:block}
+.apx-telegram-hint{margin-top:7px;color:var(--muted);font-size:11px;line-height:1.45;text-align:center}
 
 </style>
 <style>
@@ -854,7 +859,15 @@ body:has(#customerChat:not(.hidden)) .top-title{font-family:Arial,Helvetica,sans
     <button class="admin-top-logout" id="adminTopLogout" type="button" title="Log out" aria-label="Log out of admin account" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg></button>
     <button class="admin-top-logout customer-top-logout" id="customerTopLogout" type="button" title="Log out" aria-label="Log out of customer chat" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg></button>
     <div class="admin-profile-menu hidden" id="adminProfileMenu" role="menu" aria-label="Profile picture options">
-      <div class="admin-profile-menu-title">Profile picture</div>
+      <div class="admin-profile-menu-title">Admin Settings</div>
+      <div class="telegram-admin-settings" aria-label="Telegram support link settings">
+        <label for="adminTelegramUrl">Telegram support link</label>
+        <input class="field" id="adminTelegramUrl" type="url" inputmode="url" maxlength="300" placeholder="https://t.me/your_support_account" autocomplete="url">
+        <div class="telegram-admin-help">Change the Telegram account opened by the customer support button.</div>
+        <button type="button" class="primary full" id="saveAdminTelegramUrl">Save Telegram link</button>
+        <div class="telegram-admin-status" id="adminTelegramStatus" role="status" aria-live="polite"></div>
+      </div>
+      <div class="admin-profile-menu-title profile-picture-section-title">Profile picture</div>
       <button type="button" class="admin-profile-menu-item" id="previewAdminProfilePic" role="menuitem"><span class="profile-menu-icon">◉</span>Preview profile picture</button>
       <button type="button" class="admin-profile-menu-item" id="changeAdminProfilePic" role="menuitem"><span class="profile-menu-icon">＋</span>Change profile picture</button>
       <button type="button" class="admin-profile-menu-item remove" id="removeAdminProfilePic" role="menuitem"><span class="profile-menu-icon">×</span>Remove profile picture</button>
@@ -986,6 +999,7 @@ let customerMessagesLoadPromise=null,customerMessagesLoadConversationId=null,cus
 let conversations = [], activeMessages = [], currentReply = null, lastTypingSent = 0, activeAdminConversation = null;
 let currentCustomerCode = "";
 let adminProfileUrl = null, adminProfilePath = null, adminProfileChannel = null;
+let telegramSupportUrl = "https://t.me/algopipxhft";
 let profileCropImage=null, profileCropObjectUrl=null, profileCropZoom=1, profileCropOffsetX=0, profileCropOffsetY=0, profileCropDrag=null, profileCropBlob=null;
 // Customer identity is remembered for reload recovery and cleared only on explicit Logout.
 const peerPresence = {admin:{online:false,lastSeenAt:null,typing:false},customer:{online:false,lastSeenAt:null,typing:false}};
@@ -1054,12 +1068,54 @@ function paintAdminProfileAvatar(url){
  }
  const remove=$("removeAdminProfilePic");if(remove)remove.disabled=!adminProfileUrl;const preview=$("previewAdminProfilePic");if(preview)preview.disabled=!adminProfileUrl;
 }
+function normalizeTelegramSupportUrl(value){
+ let raw=String(value||"").trim();
+ if(!raw)return "";
+ if(raw.startsWith("@"))raw=raw.slice(1);
+ if(!/^https?:\/\//i.test(raw))raw="https://t.me/"+raw.replace(/^\/+/,"");
+ try{
+  const url=new URL(raw);
+  if(url.protocol!=="https:"||!/(^|\.)t\.me$|(^|\.)telegram\.me$/i.test(url.hostname)||url.pathname==="/"||url.username||url.password)return "";
+  return url.href;
+ }catch{return "";}
+}
+function applyTelegramSupportUrl(value){
+ const normalized=normalizeTelegramSupportUrl(value)||"https://t.me/algopipxhft";
+ telegramSupportUrl=normalized;
+ document.querySelectorAll("a.apx-telegram-cta").forEach(link=>{link.href=normalized;link.setAttribute("aria-label","Open AlgoPipX on Telegram")});
+ const input=$("adminTelegramUrl");if(input&&document.activeElement!==input)input.value=normalized;
+ return normalized;
+}
+async function saveAdminTelegramSupportUrl(){
+ if(!isAdmin||!currentUser||!db){showToast("Sign in as admin to change the Telegram link.");return;}
+ const input=$("adminTelegramUrl"),button=$("saveAdminTelegramUrl"),status=$("adminTelegramStatus");
+ const normalized=normalizeTelegramSupportUrl(input?.value);
+ if(!normalized){if(status)status.textContent="Enter a valid Telegram link, such as https://t.me/your_account.";input?.focus();return;}
+ if(button){button.disabled=true;button.textContent="Saving…";}if(status)status.textContent="Saving securely…";
+ try{
+  const {error}=await db.from("admin_public_profile").upsert({id:"admin",avatar_url:adminProfileUrl,avatar_path:adminProfilePath,telegram_url:normalized,updated_at:new Date().toISOString()},{onConflict:"id"});
+  if(error)throw error;
+  applyTelegramSupportUrl(normalized);
+  if(status)status.textContent="Telegram link updated for all active users.";
+  showToast("Telegram support link updated.");
+ }catch(error){
+  console.error("Telegram support link update failed:",error);
+  if(status)status.textContent="Could not save. Apply the Telegram link SQL setup, then try again.";
+  showToast("Could not save Telegram link: "+(error?.message||"Check Supabase setup."));
+ }finally{if(button){button.disabled=false;button.textContent="Save Telegram link";}}
+}
 async function loadAdminPublicProfile(client=customerDb){
  if(!client)return null;
- const {data,error}=await client.from("admin_public_profile").select("avatar_url,avatar_path").eq("id","admin").maybeSingle();
- if(error){console.warn("Could not load PipxChat profile picture:",error.message);return null;}
+ let {data,error}=await client.from("admin_public_profile").select("avatar_url,avatar_path,telegram_url").eq("id","admin").maybeSingle();
+ if(error&&/telegram_url|column .* does not exist|schema cache/i.test(String(error.message||""))){
+  // Keep the existing profile picture working even before the one-time SQL column migration is applied.
+  const fallback=await client.from("admin_public_profile").select("avatar_url,avatar_path").eq("id","admin").maybeSingle();
+  data=fallback.data;error=fallback.error;
+ }
+ if(error){console.warn("Could not load PipxChat public profile:",error.message);return null;}
  adminProfilePath=data?.avatar_path||null;
  paintAdminProfileAvatar(data?.avatar_url||null);
+ applyTelegramSupportUrl(data?.telegram_url||telegramSupportUrl);
  return data||null;
 }
 function closeAdminProfileMenu(){const menu=$("adminProfileMenu");if(menu)menu.classList.add("hidden");}
@@ -1180,54 +1236,128 @@ window.addEventListener("resize",()=>{
 const APX_FLOW_PREFIX='[[APX_FLOW:';
 const APX_DERIV_REGISTER_URL='https://t.deriv.link?t=LBS3B3G5JWLJ';
 const APX_IB_MESSAGE='Hello Deriv Support, I would like to tag my account under this IB link:\nhttps://track.deriv.com/_Ey2ku4SN05y6tyDIijdDK2Nd7ZgqdRLk/1/\nThank you.';
+function apxCheckpointKey(){return 'apx-flow-checkpoints:'+String(currentConversation?.id||'');}
+function getApxCheckpoints(){try{return JSON.parse(localStorage.getItem(apxCheckpointKey())||'{}')}catch{return {}}}
+function setApxCheckpoint(name,value=true){try{const state=getApxCheckpoints();state[name]=!!value;localStorage.setItem(apxCheckpointKey(),JSON.stringify(state));return true}catch(error){console.warn('Could not save guided-flow checkpoint:',error);return false}}
+async function apxCopyText(value){try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(value);return true}}catch(error){console.warn('Clipboard API failed; trying fallback:',error)}const field=document.createElement('textarea');field.value=value;field.setAttribute('readonly','');field.style.position='fixed';field.style.top='-1000px';field.style.opacity='0';document.body.appendChild(field);field.select();field.setSelectionRange(0,field.value.length);let copied=false;try{copied=document.execCommand('copy')}catch(error){console.warn('Clipboard fallback failed:',error)}finally{field.remove()}return copied;}
 const APX_FLOW_STEPS={
  welcome:{title:'WELCOME TO ALGOPIPX',html:'👋 Welcome to <b>ALGOPIPX!</b><br>Get access to <b>POLAR PEGASUS V4 PRO EA</b>, our automated trading robot for Gold &amp; Synthetic Indices.<br><br>You can receive the robot FREE by successfully tagging your Deriv account under my IB link.<br><br><b>First, do you already have a Deriv trading account?</b>',buttons:[['YES, I HAVE AN ACCOUNT','yes','primary'],['NO, I’M NEW TO DERIV','no','']]},
  existing:{title:'EXISTING DERIV ACCOUNT',html:'Great! Since you already have a Deriv account, you do not need to register again.<br><br>To receive POLAR PEGASUS V4 PRO EA FREE, your existing Deriv account must be successfully tagged under my Introducing Broker (IB) account.<br><br>Let’s proceed with the IB tagging instructions.',buttons:[['CONTINUE TO IB TAGGING','continue','primary']]},
- new:{title:'CREATE YOUR DERIV ACCOUNT',html:'No problem! First, create your Deriv account using my official registration link. Complete registration, then return here and continue.<br><br><b>Important:</b> After registration, you must also complete IB tagging to qualify for FREE EA access.',buttons:[['OPEN DERIV REGISTRATION','open-link','primary'],['I HAVE REGISTERED','registered','']]},
- ib:{title:'📌 IB TAGGING INSTRUCTIONS',html:'Whether you have an existing Deriv account or just registered a new one, you must complete this step.<br><br>1. Copy the message below.<br>2. Open Deriv Support / Amy.<br>3. Paste and send the message.<br>4. Wait for confirmation that your account has been successfully tagged.<br><br><b>COPY THIS MESSAGE:</b><br><span class="apx-ib-copy">Hello Deriv Support, I would like to tag my account under this IB link:<br><a class="apx-flow-link" href="https://track.deriv.com/_Ey2ku4SN05y6tyDIijdDK2Nd7ZgqdRLk/1/" target="_blank" rel="noopener">https://track.deriv.com/…</a><br>Thank you.</span>',buttons:[['COPY IB MESSAGE','copy',''],['I HAVE SENT THE MESSAGE','sent','primary']]},
+ new:{title:'CREATE YOUR DERIV ACCOUNT',html:'No problem! First, create your Deriv account using my official registration link. Complete registration, then return here and continue.<br><br><b>Important:</b> After registration, you must also complete IB tagging to qualify for FREE EA access.',buttons:[['OPEN DERIV REGISTRATION','open-link','primary'],['I HAVE REGISTERED','registered','']],warning:'The registration confirmation button unlocks only after you successfully open the official registration link in a new tab. Complete registration there before returning.'},
+ ib:{title:'📌 IB TAGGING INSTRUCTIONS',html:'Whether you have an existing Deriv account or just registered a new one, you must complete this step.<br><br>1. Copy the message below.<br>2. Open Deriv Support / Amy.<br>3. Paste and send the message.<br>4. Wait for confirmation that your account has been successfully tagged.<br><br><b>COPY THIS MESSAGE:</b><br><span class="apx-ib-copy">Hello Deriv Support, I would like to tag my account under this IB link:<br><a class="apx-flow-link" href="https://track.deriv.com/_Ey2ku4SN05y6tyDIijdDK2Nd7ZgqdRLk/1/" target="_blank" rel="noopener">https://track.deriv.com/…</a><br>Thank you.</span>',buttons:[['COPY IB MESSAGE','copy',''],['I HAVE SENT THE MESSAGE','sent','primary']],warning:'You must successfully copy the IB message before the sent-confirmation button unlocks. Send the copied message to Deriv Support / Amy first; copying alone does not complete IB tagging.'},
  wait:{title:'WAIT FOR DERIV CONFIRMATION',html:'Thank you! Please wait for Deriv Support to confirm that your account has been successfully tagged under my IB link.<br><br>Once you receive confirmation, return here and continue to the final verification step. You only need to send a screenshot of the successful IB tagging confirmation.',buttons:[['I HAVE RECEIVED CONFIRMATION','confirmed','primary']]},
- verify:{title:'✅ FINAL VERIFICATION STEP',html:'Once Deriv Support confirms that your account has been successfully tagged, please send the following item in this chat:<br><br><b>IB TAGGING CONFIRMATION SCREENSHOT</b><br>Upload a clear screenshot from Deriv Support showing that your account has been successfully tagged.<br><br>Your screenshot is all we need to receive your submission. Our support team will review it and verify your details before approving your FREE Polar Pegasus V4 Pro EA.',buttons:[],note:'Attach your IB tagging confirmation screenshot using the paperclip/photo button, then send it in this chat. No Deriv Account ID message is required.'},
+ verify:{title:'✅ FINAL VERIFICATION STEP',html:'Once Deriv Support confirms that your account has been successfully tagged, please send the following item in this chat:<br><br><b>IB TAGGING CONFIRMATION SCREENSHOT</b><br>Upload a clear screenshot from Deriv Support showing that your account has been successfully tagged.<br><br>Your screenshot is all we need to receive your submission. Our support team will review it and verify your details before approving your FREE Polar Pegasus V4 Pro EA.',buttons:[],note:'Attach your IB tagging confirmation screenshot using the paperclip/photo button, then send it in this chat. No Deriv Account ID message is required.',telegram:true},
  done:{title:'🎉 YOUR SUBMISSION HAS BEEN RECEIVED!',html:'Your IB tagging confirmation screenshot has been received successfully.<br><br>📌 Your Customer ID: <b>{CHAT_ID}</b><br>Please save your Customer ID. It is different from your Deriv Account ID and is used only to access this chat again and check your verification and robot delivery status.<br><br>The AlgoPipX support team will now review your submitted details.<br><br>Once approved, you will receive:<br>🎁 <b>POLAR PEGASUS V4 PRO EA — FREE</b><br>You will also receive instructions for joining the AlgoPipX VIP channel.<br><br>⏳ Please wait for verification and approval. No further action is required at this stage.<br><br>Thank you for choosing AlgoPipX!',buttons:[]}
 };
 function apxFlowMarkup(step,conversation,adminView=false){
  const config=APX_FLOW_STEPS[step];if(!config)return '';
  const customerId=String(conversation?.customer_code||'').trim();
  const html=config.html.replace('{CHAT_ID}',escapeHtml(customerId));
- const buttons=(adminView?[]:(config.buttons||[])).map(([label,action,kind])=>`<button type="button" class="apx-flow-btn ${kind||''}" data-apx-flow="${action}">${label}</button>`).join('');
+ const checkpoints=getApxCheckpoints();
+ const buttons=(adminView?[]:(config.buttons||[])).map(([label,action,kind])=>{const hasCustomerId=/^\d{4}$/.test(customerId);const locked=(action==='registered'&&!checkpoints.registrationOpened)||(action==='sent'&&!checkpoints.ibMessageCopied)||(action==='confirmed'&&hasCustomerId&&!checkpoints.customerIdCopied);return `<button type="button" class="apx-flow-btn ${kind||''}" data-apx-flow="${action}" ${locked?'disabled aria-disabled="true" title="Complete the previous action first"':''}>${label}</button>`}).join('');
  const customerIdPanel=(!adminView&&step==='wait'&&/^\d{4}$/.test(customerId))?`<div class="apx-customer-id-panel"><div><span class="apx-customer-id-label">YOUR CUSTOMER ID · KEEP IT SAFE</span><strong class="apx-customer-id-value">${escapeHtml(customerId)}</strong></div><button type="button" class="apx-customer-id-copy" data-apx-flow="copy-customer-id">COPY YOUR USER ID TO ACCESS CHAT</button></div>`:'';
- return `<div class="apx-flow-card"><div class="apx-flow-title">${config.title}</div><div class="apx-flow-copy">${html}</div>${customerIdPanel}${buttons?`<div class="apx-flow-actions">${buttons}</div>`:''}${config.note?`<div class="apx-flow-note">${config.note}</div>`:''}</div>`;
+ return `<div class="apx-flow-card"><div class="apx-flow-title">${config.title}</div><div class="apx-flow-copy">${html}</div>${customerIdPanel}${buttons?`<div class="apx-flow-actions">${buttons}</div>`:''}${config.warning?`<div class="apx-flow-warning"><span aria-hidden="true">ⓘ</span><span>${config.warning}</span></div>`:''}${config.note?`<div class="apx-flow-note">${config.note}</div>`:''}${config.telegram&&!adminView?`<a class="apx-telegram-cta" href="${escapeHtml(telegramSupportUrl)}" target="_blank" rel="noopener noreferrer" aria-label="Open AlgoPipX on Telegram"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M21.7 4.3 18.6 19c-.2 1-.8 1.2-1.6.8l-4.5-3.3-2.2 2.1c-.2.2-.4.4-.8.4l.3-4.6 8.4-7.6c.4-.3-.1-.5-.6-.2L7.2 13.2l-4.4-1.4c-1-.3-1-1 .2-1.5L20.1 3.7c.9-.3 1.8.2 1.6.6Z"/></svg><span>CHAT WITH US ON TELEGRAM</span></a><div class="apx-telegram-hint">Need help or haven’t received an email update? Reach our support team on Telegram.</div>`:''}</div>`;
+}
+const apxTypingTimers=new Map();
+function apxTypingDelay(step){
+ const config=APX_FLOW_STEPS[step]||{};
+ const plain=(String(config.title||'')+' '+String(config.html||'').replace(/<[^>]*>/g,' ').replace(/&[a-z#0-9]+;/gi,' ')).replace(/\s+/g,' ').trim();
+ // A natural, variable pace with sensible bounds; longer scripted replies take longer.
+ return Math.max(1050,Math.min(3600,850+plain.length*15+Math.random()*520));
+}
+async function showApxAutomatedTyping(step,conversationId){
+ const box=$('customerMessages');
+ if(!box||currentConversation?.id!==conversationId)return null;
+ const old=box.querySelector('[data-apx-automated-typing]');if(old)old.remove();
+ const row=document.createElement('div');row.className='automated-typing-row';row.dataset.apxAutomatedTyping='true';row.setAttribute('aria-live','polite');row.setAttribute('role','status');
+ const bubble=document.createElement('div');bubble.className='automated-typing-bubble';
+ const label=document.createElement('span');label.textContent='Support is typing';
+ const dots=document.createElement('span');dots.className='wa-typing-dots';dots.setAttribute('aria-hidden','true');
+ for(let i=0;i<3;i++)dots.appendChild(document.createElement('i'));
+ bubble.append(label,dots);row.appendChild(bubble);box.appendChild(row);box.scrollTop=box.scrollHeight;
+ const delay=apxTypingDelay(step);
+ await new Promise(resolve=>{const timer=setTimeout(resolve,delay);apxTypingTimers.set(conversationId,timer)});
+ apxTypingTimers.delete(conversationId);
+ if(currentConversation?.id===conversationId){row.remove();}
+ return true;
 }
 async function postApxFlowStep(step){
  if(!currentConversation||!currentUser||!customerDb||!APX_FLOW_STEPS[step])return false;
+ const conversationId=currentConversation.id;
  const body=APX_FLOW_PREFIX+step+']]';
- const {error}=await customerDb.rpc('pipxchat_add_flow_message',{p_conversation_id:currentConversation.id,p_body:body});
- if(error){console.error('Guided flow message could not be saved:',error);showToast('Guided messages are not enabled yet. Run pipxchat_guided_flow_setup.sql in Supabase.');return false}
- await loadCustomerMessages();return true;
+ try{
+  // Show a realistic in-chat typing state before the automated guided reply is saved
+  // and rendered. This is presentation-only and does not alter realtime/database data.
+  await showApxAutomatedTyping(step,conversationId);
+  if(currentConversation?.id!==conversationId)return false;
+  const {error}=await customerDb.rpc('pipxchat_add_flow_message',{p_conversation_id:conversationId,p_body:body});
+  if(error){
+   console.error('Guided flow message could not be saved:',error);
+   const missing=/function .*pipxchat_add_flow_message|could not find the function|does not exist/i.test(String(error.message||''));
+   showToast(missing?'Guided messages are not enabled yet. Run pipxchat_guided_flow_setup.sql in Supabase.':'Could not save this step: '+(error.message||'Please check your connection and try again.'));
+   return false;
+  }
+  if(currentConversation?.id===conversationId){
+   try{await loadCustomerMessages()}catch(refreshError){console.warn('Guided step saved, but chat refresh failed:',refreshError)}
+  }
+  return true;
+ }catch(error){
+  console.error('Guided flow save request failed:',error);
+  showToast('Could not save this step. Check your connection and try again.');
+  return false;
+ }
 }
 async function ensureApxFlowStarted(){
- if(isAdmin||!currentConversation||!customerDb)return;
- const {data,error}=await customerDb.from('messages').select('id,body').eq('conversation_id',currentConversation.id).like('body','[[APX_FLOW:%').limit(1);
- if(error){console.warn('Could not check guided flow state:',error.message);return}
- if(!data?.length)await postApxFlowStep('welcome');
+ if(isAdmin||!currentConversation||!currentUser||!customerDb)return false;
+ const conversationId=currentConversation.id;
+ try{
+  const {data,error}=await customerDb.from('messages').select('id,body').eq('conversation_id',conversationId).like('body','[[APX_FLOW:%').limit(1);
+  if(error){console.warn('Could not check guided flow state:',error.message);return false}
+  if(!data?.length&&currentConversation?.id===conversationId)return await postApxFlowStep('welcome');
+  return true;
+ }catch(error){console.warn('Guided flow initialization request failed:',error);return false}
 }
 async function apxSendChoice(label){
- if(!currentConversation||!currentUser)return;
- const input=$('customerText');input.value=label;await sendMessage('customer');
+ if(!currentConversation||!currentUser)return false;
+ return await sendMessage('customer',label);
 }
 async function handleApxFlowAction(action,button){
  if(button?.disabled)return;
  if(button)button.disabled=true;
- const advance=async(label,next)=>{if(label)await apxSendChoice(label);await postApxFlowStep(next)};
+ const advance=async(label,next)=>{if(label){const sent=await apxSendChoice(label);if(!sent){showToast('Your confirmation message was not saved. Please try again.');if(button)button.disabled=false;return false}}const saved=await postApxFlowStep(next);if(!saved&&button)button.disabled=false;return saved};
  try{
   if(action==='yes')await advance('YES, I HAVE AN ACCOUNT','existing');
   else if(action==='no')await advance('NO, I’M NEW TO DERIV','new');
   else if(action==='continue')await advance('CONTINUE TO IB TAGGING','ib');
-  else if(action==='open-link'){window.open(APX_DERIV_REGISTER_URL,'_blank','noopener,noreferrer');if(button)button.disabled=false}
-  else if(action==='registered')await advance('I HAVE REGISTERED','ib');
-  else if(action==='copy'){try{await navigator.clipboard.writeText(APX_IB_MESSAGE);showToast('IB tagging message copied.')}catch{showToast('Copy was blocked by your browser. Select and copy the message manually.')}if(button)button.disabled=false}
-  else if(action==='copy-customer-id'){const customerId=String(currentConversation?.customer_code||'').trim();if(!/^\d{4}$/.test(customerId)){showToast('Your Customer ID is not available. Please reopen your chat.')}else{let copied=false;try{await navigator.clipboard.writeText(customerId);copied=true}catch{const field=document.createElement('textarea');field.value=customerId;field.setAttribute('readonly','');field.style.position='fixed';field.style.opacity='0';document.body.appendChild(field);field.select();try{copied=document.execCommand('copy')}finally{field.remove()}}showToast(copied?'Your Customer ID has been copied. Save it to access this chat later.':'Copy was blocked. Please select and copy your Customer ID manually.')}if(button)button.disabled=false}
-  else if(action==='sent')await advance('I HAVE SENT THE MESSAGE','wait');
-  else if(action==='confirmed')await advance('I HAVE RECEIVED CONFIRMATION','verify');
+  else if(action==='open-link'){
+   const opened=window.open(APX_DERIV_REGISTER_URL,'_blank');
+   if(opened){try{opened.opener=null}catch{};setApxCheckpoint('registrationOpened');showToast('Registration link opened. Complete registration, then return to this chat.');}
+   else showToast('Your browser blocked the registration tab. Allow pop-ups for this site and tap OPEN DERIV REGISTRATION again.');
+   if(button)button.disabled=false;
+   const card=button?.closest('.apx-flow-card');if(card){const next=card.querySelector('[data-apx-flow="registered"]');if(next)next.disabled=!getApxCheckpoints().registrationOpened;}
+  }
+  else if(action==='registered'){
+   if(!getApxCheckpoints().registrationOpened){showToast('Please open the official Deriv registration link first.');if(button)button.disabled=false;return}
+   await advance('I HAVE REGISTERED','ib');
+  }
+  else if(action==='copy'){
+   const copied=await apxCopyText(APX_IB_MESSAGE);
+   if(copied){setApxCheckpoint('ibMessageCopied');showToast('IB tagging message copied successfully. Paste and send it to Deriv Support / Amy.');}
+   else showToast('Could not copy the message. Allow clipboard access or select and copy the message manually, then try again.');
+   if(button)button.disabled=false;
+   const card=button?.closest('.apx-flow-card');if(card){const next=card.querySelector('[data-apx-flow="sent"]');if(next)next.disabled=!getApxCheckpoints().ibMessageCopied;}
+  }
+  else if(action==='copy-customer-id'){
+   const customerId=String(currentConversation?.customer_code||'').trim();
+   if(!/^\d{4}$/.test(customerId))showToast('Your Customer ID is not available. Please reopen your chat.');
+   else{const copied=await apxCopyText(customerId);if(copied)setApxCheckpoint('customerIdCopied');showToast(copied?'Your Customer ID has been copied. Save it to access this chat later.':'Copy was blocked. Please select and copy your Customer ID manually.');const card=button?.closest('.apx-flow-card');if(card){const next=card.querySelector('[data-apx-flow="confirmed"]');if(next)next.disabled=!getApxCheckpoints().customerIdCopied;}}
+   if(button)button.disabled=false;
+  }
+  else if(action==='sent'){
+   if(!getApxCheckpoints().ibMessageCopied){showToast('Copy the IB tagging message successfully before continuing.');if(button)button.disabled=false;return}
+   await advance('I HAVE SENT THE MESSAGE','wait');
+  }
+  else if(action==='confirmed'){const customerId=String(currentConversation?.customer_code||'').trim();if(/^\d{4}$/.test(customerId)&&!getApxCheckpoints().customerIdCopied){showToast('Copy and save your Customer ID before continuing.');if(button)button.disabled=false;return}await advance('I HAVE RECEIVED CONFIRMATION','verify');}
  }catch(error){console.error('Guided flow action failed:',error);showToast('Could not continue this step. Please try again.');if(button)button.disabled=false}
 }
 async function maybeCompleteApxSubmission(){
@@ -1791,6 +1921,8 @@ async function init(){
  $("adminTopLogout").onclick=adminLogout;
  $("customerTopLogout").onclick=customerLogout;
  $("adminProfileButton").addEventListener("click",e=>{e.stopPropagation();$("adminProfileMenu").classList.toggle("hidden")});
+ $("saveAdminTelegramUrl").addEventListener("click",saveAdminTelegramSupportUrl);
+ $("adminTelegramUrl").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();saveAdminTelegramSupportUrl()}});
  $("previewAdminProfilePic").addEventListener("click",previewAdminProfilePicture);
  $("changeAdminProfilePic").addEventListener("click",()=>{$("adminProfileFile").click()});
  $("removeAdminProfilePic").addEventListener("click",removeAdminProfilePicture);
@@ -2445,28 +2577,63 @@ async function subscribeCustomerChat(){
    }
   });
 }
-async function sendMessage(who){
- const input=$(who==="admin"?"adminText":"customerText"),body=input.value.trim();
- if(!body||!currentConversation||!currentUser||!db)return;
- const tray=$(who+"EmojiTray");if(tray)tray.classList.add("hidden");input.focus();
- const liveChannel=who==="admin"?adminChannel:customerChannel;if(liveChannel)liveChannel.send({type:"broadcast",event:"typing",payload:{user_id:currentUser.id,is_typing:false}}).catch(()=>{});
- const replySnapshot=currentReply;
- input.value="";setTextAreaAuto(input);
- const payload={conversation_id:currentConversation.id,sender_id:currentUser.id,sender_type:isAdmin?"admin":"customer",body,message_type:"text"};
+const messageSendLocks=new Set();
+async function sendMessage(who,messageOverride=null){
+ const isAdminSend=who==='admin';
+ const input=$(isAdminSend?'adminText':'customerText');
+ if(!input||!currentConversation||!currentUser)return false;
+ const body=String(messageOverride==null?input.value:messageOverride).trim();
+ if(!body)return false;
+ const client=isAdminSend?db:customerDb;
+ if(!client){showToast(isAdminSend?'Admin chat is not connected. Please sign in again.':'Chat is not connected. Please refresh and try again.');return false}
+ if(messageSendLocks.has(who))return false;
+ const conversationId=currentConversation.id,userId=currentUser.id,replySnapshot=currentReply;
+ messageSendLocks.add(who);
+ const submit=input.closest('form')?.querySelector('button[type="submit"]');
+ if(submit)submit.disabled=true;
+ const tray=$(who+'EmojiTray');if(tray)tray.classList.add('hidden');
+ const liveChannel=isAdminSend?adminChannel:customerChannel;
+ if(liveChannel)liveChannel.send({type:'broadcast',event:'typing',payload:{user_id:userId,is_typing:false}}).catch(()=>{});
+ const payload={conversation_id:conversationId,sender_id:userId,sender_type:isAdminSend?'admin':'customer',body,message_type:'text'};
  if(replySnapshot)payload.reply_to_id=replySnapshot.id;
- // Optimistic local bubble: show the message immediately, then reconcile with Supabase.
- const tempId='local-'+Date.now()+'-'+Math.random().toString(36).slice(2,7);
+ const tempId='local-'+Date.now()+'-'+Math.random().toString(36).slice(2,8);
  const optimistic={...payload,id:tempId,created_at:new Date().toISOString(),read_at:null};
- activeMessages=[...activeMessages,optimistic];
- renderMessages(who==="admin"?"adminMessages":"customerMessages",activeMessages,currentUser.id,who==="admin");
- const client=who==="admin"?db:customerDb;
- const {error}=await client.from("messages").insert(payload);
- if(error){activeMessages=activeMessages.filter(m=>m.id!==tempId);input.value=body;setTextAreaAuto(input);renderMessages(who==="admin"?"adminMessages":"customerMessages",activeMessages,currentUser.id,who==="admin");showToast("Message not sent: "+error.message);return}
- if(who==="admin")clearPendingNewUpdates(currentConversation?.id);
- if(currentReply===replySnapshot){currentReply=null;renderReplyDraft(who)}
- // Reconcile the optimistic message with the persisted row without a full page refresh.
- if(currentConversation)await (isAdmin?loadActiveMessages():loadCustomerMessages());
- if(who==='customer'&&!isAdmin){await maybeCompleteApxSubmission();}
+ const isStillThisChat=()=>currentConversation?.id===conversationId&&currentUser?.id===userId;
+ try{
+  if(isStillThisChat()){
+   activeMessages=[...activeMessages,optimistic];
+   renderMessages(isAdminSend?'adminMessages':'customerMessages',activeMessages,userId,isAdminSend);
+  }
+  // Keep the draft in the composer until Supabase confirms the insert.
+  const {error}=await client.from('messages').insert(payload);
+  if(error)throw error;
+  if(input.value.trim()===body){input.value='';setTextAreaAuto(input)}
+  if(isAdminSend)clearPendingNewUpdates(conversationId);
+  if(currentReply===replySnapshot){currentReply=null;renderReplyDraft(who)}
+  if(isStillThisChat()){
+   try{await (isAdminSend?loadActiveMessages():loadCustomerMessages())}
+   catch(refreshError){console.warn('Message was saved, but the chat refresh failed:',refreshError)}
+  }
+  if(who==='customer'&&!isAdminSend&&isStillThisChat())await maybeCompleteApxSubmission();
+  return true;
+ }catch(error){
+  console.error('Message send failed:',error);
+  if(isStillThisChat()){
+   activeMessages=activeMessages.filter(message=>message.id!==tempId);
+   renderMessages(isAdminSend?'adminMessages':'customerMessages',activeMessages,userId,isAdminSend);
+  }
+  // A rejected request never clears the user's draft. For guided buttons, restore
+  // the selected answer into the composer so it can be retried manually as well.
+  if(messageOverride!=null&&!input.value.trim()){
+   input.value=body;setTextAreaAuto(input);
+  }
+  const detail=error?.message||error?.details||'Network request failed. Please try again.';
+  showToast('Message not sent: '+detail);
+  return false;
+ }finally{
+  messageSendLocks.delete(who);
+  if(submit)submit.disabled=false;
+ }
 }
 const MAX_ATTACHMENT_BYTES=15*1024*1024;
 function safeFileName(name){return String(name||'file').normalize('NFKD').replace(/[^a-zA-Z0-9._-]+/g,'_').slice(-100)||'file'}
@@ -2660,10 +2827,10 @@ function getGeoPosition(options={}){
 }
 function locationMessage(lat,lon,live=false){const url=`https://maps.google.com/?q=${encodeURIComponent(lat+','+lon)}`;return `${live?'📍 Live location update':'📍 Shared location'}: ${url}`}
 async function sendSystemChatText(who,body){
- if(!currentConversation||!currentUser||!db)throw new Error('Open a conversation before sharing location.');
- const payload={conversation_id:currentConversation.id,sender_id:currentUser.id,sender_type:isAdmin?'admin':'customer',body,message_type:'text'};
- if(currentReply)payload.reply_to_id=currentReply.id;
  const client=who==='admin'?db:customerDb;
+ if(!currentConversation||!currentUser||!client)throw new Error('Open a connected conversation before sharing location.');
+ const payload={conversation_id:currentConversation.id,sender_id:currentUser.id,sender_type:who==='admin'?'admin':'customer',body,message_type:'text'};
+ if(currentReply)payload.reply_to_id=currentReply.id;
  const {error}=await client.from('messages').insert(payload);if(error)throw error;
  currentReply=null;renderReplyDraft(who);await (isAdmin?loadActiveMessages():loadCustomerMessages());
 }
@@ -2697,12 +2864,14 @@ function stopLiveLocation(who,notify=true){
 window.addEventListener('beforeunload',()=>{for(const who of [...liveLocationSessions.keys()])stopLiveLocation(who,false)});
 
 async function uploadAndSendAttachment(who,file,forcedType=null){
- if(!file||!currentConversation||!currentUser||!db||!customerDb)return false;
+ if(!file||!currentConversation||!currentUser)return false;
  if(file.size>MAX_ATTACHMENT_BYTES){showToast('Files must be 15 MB or smaller.');return false}
  const ext=(file.name||'').split('.').pop().toLowerCase();const allowed=file.type.startsWith('image/')||file.type.startsWith('video/')||file.type.startsWith('audio/')||['pdf','txt','doc','docx','xls','xlsx','ppt','pptx','csv','zip'].includes(ext)||['application/pdf','text/plain','text/csv','application/zip','application/x-zip-compressed','application/msword','application/vnd.openxmlformats-officedocument.wordprocessingml.document','application/vnd.ms-excel','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.ms-powerpoint','application/vnd.openxmlformats-officedocument.presentationml.presentation'].includes(file.type);
  if(!allowed){showToast('Unsupported file type. Choose a photo, video, audio or document.');return false}
  const type=forcedType||(file.type.startsWith('image/')?'image':file.type.startsWith('audio/')?'audio':'file');
- const client=who==='admin'?db:customerDb,conversationId=currentConversation.id,userId=currentUser.id,replySnapshot=currentReply;
+ const client=who==='admin'?db:customerDb;
+ if(!client){showToast('Chat is not connected. Please refresh and try again.');return false}
+ const conversationId=currentConversation.id,userId=currentUser.id,replySnapshot=currentReply;
  const tempId='upload-'+Date.now()+'-'+Math.random().toString(36).slice(2,8),localUrl=URL.createObjectURL(file);
  const path=`${conversationId}/${userId}/${Date.now()}-${safeFileName(file.name||('voice-message.'+(file.type.split('/')[1]||'webm')))}`;
  const labels={image:'[Image]',audio:'[Voice message]',file:'[Attachment]'};
@@ -2710,12 +2879,23 @@ async function uploadAndSendAttachment(who,file,forcedType=null){
  if(currentConversation?.id===conversationId){activeMessages=[...activeMessages,optimistic];renderMessages(who==='admin'?'adminMessages':'customerMessages',activeMessages,userId,who==='admin')}
  showToast(type==='audio'?'Sending voice message…':'Sending attachment…');
  const removeOptimistic=()=>{if(currentConversation?.id===conversationId&&currentUser?.id===userId){activeMessages=activeMessages.filter(m=>m.id!==tempId);renderMessages(who==='admin'?'adminMessages':'customerMessages',activeMessages,userId,who==='admin')}URL.revokeObjectURL(localUrl)};
- const {error:uploadError}=await client.storage.from('chat-attachments').upload(path,file,{cacheControl:'3600',upsert:false,contentType:file.type||'application/octet-stream'});
- if(uploadError){removeOptimistic();showToast('Upload failed: '+uploadError.message+' (check connection and chat-attachments permissions)');return false}
+ let uploadError=null;
+ try{
+  const result=await client.storage.from('chat-attachments').upload(path,file,{cacheControl:'3600',upsert:false,contentType:file.type||'application/octet-stream'});
+  uploadError=result.error;
+ }catch(error){uploadError=error}
+ if(uploadError){removeOptimistic();showToast('Upload failed: '+(uploadError.message||'Network request failed')+' (check connection and chat-attachments permissions)');return false}
  const payload={conversation_id:conversationId,sender_id:userId,sender_type:who==='admin'?'admin':'customer',body:labels[type],message_type:type,attachment_path:path,attachment_name:file.name||'Voice message',attachment_mime:file.type||'audio/webm',attachment_size:file.size};
  if(replySnapshot)payload.reply_to_id=replySnapshot.id;
- const {error}=await client.from('messages').insert(payload);
- if(error){await client.storage.from('chat-attachments').remove([path]);removeOptimistic();showToast('Message record failed: '+error.message);return false}
+ let insertError=null;
+ try{
+  const result=await client.from('messages').insert(payload);
+  insertError=result.error;
+ }catch(error){insertError=error}
+ if(insertError){
+  try{await client.storage.from('chat-attachments').remove([path])}catch(cleanupError){console.warn('Uploaded attachment cleanup failed:',cleanupError)}
+  removeOptimistic();showToast('Message record failed: '+(insertError.message||'Network request failed'));return false
+ }
  if(who==='admin')clearPendingNewUpdates(conversationId);
  if(currentReply===replySnapshot) {currentReply=null;if(currentConversation?.id===conversationId)renderReplyDraft(who)}
  if(currentConversation?.id===conversationId&&currentUser?.id===userId){
@@ -2896,6 +3076,14 @@ if (document.readyState === "loading") {
 .admin-profile-menu-item:hover{background:var(--input)}
 .admin-profile-menu-item.remove{color:var(--danger)}
 .admin-profile-menu-item:disabled{opacity:.42;cursor:not-allowed}
+.telegram-admin-settings{padding:8px 9px 11px;border-bottom:1px solid var(--line);margin-bottom:5px}
+.telegram-admin-settings label{display:block;font-size:12px;font-weight:700;color:var(--text);margin:0 0 7px}
+.telegram-admin-settings .field{min-height:42px;padding:10px 11px;font-size:12px;border-radius:9px}
+.telegram-admin-help{font-size:11px;line-height:1.45;color:var(--muted);margin-top:6px}
+.telegram-admin-settings .primary{min-height:40px;margin-top:9px;padding:10px 12px;font-size:12px;border-radius:9px}
+.telegram-admin-status{min-height:15px;margin-top:6px;font-size:11px;color:var(--muted);line-height:1.35}
+.profile-picture-section-title{border-bottom:0;margin:3px 0 0;padding-top:8px}
+
 .profile-menu-icon{width:25px;height:25px;display:grid;place-items:center;border-radius:50%;background:var(--input);font-size:18px;flex:0 0 25px}
 #customerAdminAvatar{overflow:hidden}
 #customerAdminAvatar img{display:block;width:100%;height:100%;object-fit:cover;border-radius:50%}
@@ -3008,7 +3196,7 @@ if (document.readyState === "loading") {
   }
 }
 </style>
-</body>
+
 
 <style id="whatsapp-admin-reaction-inbox-fix">
 /* Unread reaction badges and the jump-to-reacted-message affordance follow the active app theme. */
@@ -3016,7 +3204,7 @@ if (document.readyState === "loading") {
 .reaction-jump-highlight .bubble{outline:2px solid var(--accent);outline-offset:3px;box-shadow:0 0 0 5px color-mix(in srgb,var(--accent) 15%,transparent);transition:outline-color .2s,box-shadow .2s}
 @media(prefers-reduced-motion:reduce){.reaction-jump-highlight .bubble{transition:none}}
 </style>
-</html>
+
 
 <style id="whatsapp-emoji-panel-final-polish">
 /* Emoji picker: AlgoPipX-Web-like compact panel, anchored to the active chat composer. */
@@ -3254,3 +3442,6 @@ if (document.readyState === "loading") {
 @keyframes waNewMessageGlow{0%,22%{background:color-mix(in srgb,var(--accent) 18%,var(--panel));box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 10%,transparent)}100%{box-shadow:0 0 0 0 transparent}}
 @media(prefers-reduced-motion:reduce){.wa-new-message-highlight .bubble{animation:none;outline:2px solid var(--accent);outline-offset:3px}}
 </style>
+
+</body>
+</html>
