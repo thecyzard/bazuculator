@@ -1029,8 +1029,8 @@ function setAdminEntryMode(mode){
  if(adminLogoutButton)adminLogoutButton.hidden=mode!=="admin";
  if(customerLogoutButton)customerLogoutButton.hidden=mode!=="customer-session";
 }
-const ADMIN_ACCESS_PATH="/chat-control-2555";
-function isAdminRoute(){const path=window.location.pathname.replace(/\/+$/,"")||"/";return path===ADMIN_ACCESS_PATH;}
+const ADMIN_ACCESS_HASH="#/chat-control-2555";
+function isAdminRoute(){return (window.location.hash||"").replace(/\/+$/,"")===ADMIN_ACCESS_HASH;}
 function showAdminRoute(){
  if(isAdmin){openAdminDashboard();return;}
  showOnly("adminLogin");setAdminEntryMode("none");
@@ -1850,10 +1850,10 @@ async function init(){
  localStorage.removeItem("support-chat-customer-name-v1");localStorage.removeItem("support-chat-customer-code-v1");
  const continueModal=$("customerContinuePanel");if(continueModal&&continueModal.parentElement!==document.querySelector(".app"))document.querySelector(".app").appendChild(continueModal);
  setConfigNotice();
- // Admin access is available only at the non-public path: /chat-control-2555.
+ // Secret admin entry uses a single-file hash route; no folders or server rewrites are required.
  window.addEventListener("hashchange",handleAppRouteChange);
  if(isAdminRoute())showAdminRoute();
- $("backWelcome").onclick=()=>{history.replaceState(null,"","/"+location.search);showOnly("welcome");setAdminEntryMode("customer");$("loginError").textContent="";$("loginForm").reset();$("topTitle").textContent="AlgoPipX";$("topSub").textContent="We’re here to help"};
+ $("backWelcome").onclick=()=>{history.replaceState(null,"",location.pathname+location.search);showOnly("welcome");setAdminEntryMode("customer");$("loginError").textContent="";$("loginForm").reset();$("topTitle").textContent="AlgoPipX";$("topSub").textContent="We’re here to help"};
  $("startForm").addEventListener("submit",startCustomer);
  $("showContinuePanel").addEventListener("click",()=>{const modal=$("customerContinuePanel");modal.classList.remove("hidden");$('continueName').value='';$('continueCode').value='';$('continueError').textContent='';setTimeout(()=>$('continueName').focus(),40)});
  const closeContinue=()=>{$("customerContinuePanel").classList.add("hidden");$("continueError").textContent="";$("continueCode").value=""};
